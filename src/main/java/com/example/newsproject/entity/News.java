@@ -1,7 +1,6 @@
 package com.example.newsproject.entity;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,7 +9,6 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,9 +31,6 @@ public class News {
 
     @Column(nullable = false)
     private String text;
-
-    @ElementCollection
-    private List<Long> commentIds;
 
     @PrePersist
     public void prePersist() {

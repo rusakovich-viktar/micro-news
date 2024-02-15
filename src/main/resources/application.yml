@@ -2,7 +2,7 @@ spring:
   #  profiles:
   #    active: test
   application:
-    name: micronews
+    name: micro-news
   datasource:
     url: jdbc:postgresql://localhost:5432/news_comments
     username: postgres

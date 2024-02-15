@@ -8,11 +8,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class NewsResponseDto {
+public class CommentResponseDto {
 
     private Long id;
     private LocalDateTime time;
     private LocalDateTime updateTime;
-    private String title;
     private String text;
+    private String username;
+    private Long newsId;
 }

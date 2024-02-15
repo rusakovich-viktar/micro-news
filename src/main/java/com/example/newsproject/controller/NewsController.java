@@ -1,6 +1,8 @@
 package com.example.newsproject.controller;
 
 import com.example.newsproject.dto.request.NewsRequestDto;
+import com.example.newsproject.dto.response.CommentListResponseDto;
+import com.example.newsproject.dto.response.CommentResponseDto;
 import com.example.newsproject.dto.response.NewsResponseDto;
 import com.example.newsproject.service.NewsService;
 import jakarta.validation.Valid;
@@ -21,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/news")
 @RequiredArgsConstructor
-public class NewsController extends BaseController{
+public class NewsController extends BaseController {
 
     private final NewsService newsService;
 
@@ -39,7 +41,8 @@ public class NewsController extends BaseController{
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<NewsResponseDto> updateNews(@PathVariable Long id,@Valid @RequestBody NewsRequestDto newsRequestDto) {
+    public ResponseEntity<NewsResponseDto> updateNews(@PathVariable Long id,
+                                                      @Valid @RequestBody NewsRequestDto newsRequestDto) {
         return ResponseEntity.ok(newsService.updateNews(id, newsRequestDto));
     }
 
@@ -53,5 +56,17 @@ public class NewsController extends BaseController{
     @GetMapping
     public ResponseEntity<Page<NewsResponseDto>> getAllNews(Pageable pageable) {
         return ResponseEntity.ok(newsService.getAllNews(pageable));
+    }
+
+    @GetMapping("/{newsId}/comments")
+    public ResponseEntity<CommentListResponseDto> getCommentsByNewsId(@PathVariable Long newsId,
+                                                                      Pageable pageable) {
+        return newsService.getCommentsByNewsId(newsId, pageable);
+    }
+
+    @GetMapping("/{newsId}/comments/{commentId}")
+    public ResponseEntity<CommentResponseDto> getCommentByNewsIdAndCommentId(@PathVariable Long newsId,
+                                                                             @PathVariable Long commentId) {
+        return ResponseEntity.ok(newsService.getCommentByNewsIdAndCommentId(newsId, commentId));
     }
 }
