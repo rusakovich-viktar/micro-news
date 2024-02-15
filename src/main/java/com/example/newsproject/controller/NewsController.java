@@ -27,7 +27,6 @@ public class NewsController extends BaseController {
 
     private final NewsService newsService;
 
-
     @PostMapping
     public ResponseEntity<NewsResponseDto> createNews(@Valid @RequestBody NewsRequestDto newsRequestDto) {
         return new ResponseEntity<>(
@@ -69,4 +68,6 @@ public class NewsController extends BaseController {
                                                                              @PathVariable Long commentId) {
         return ResponseEntity.ok(newsService.getCommentByNewsIdAndCommentId(newsId, commentId));
     }
+
+
 }
