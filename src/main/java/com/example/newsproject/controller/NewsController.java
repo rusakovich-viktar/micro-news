@@ -4,7 +4,6 @@ import com.example.newsproject.dto.request.NewsRequestDto;
 import com.example.newsproject.dto.response.CommentListResponseDto;
 import com.example.newsproject.dto.response.CommentResponseDto;
 import com.example.newsproject.dto.response.NewsResponseDto;
-import com.example.newsproject.entity.News;
 import com.example.newsproject.service.NewsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -72,9 +70,5 @@ public class NewsController extends BaseController {
         return ResponseEntity.ok(newsService.getCommentByNewsIdAndCommentId(newsId, commentId));
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<Page<News>> search(@RequestParam String query, Pageable pageable) {
-        Page<News> results = newsService.search(query, pageable);
-        return ResponseEntity.ok(results);
-    }
+
 }
