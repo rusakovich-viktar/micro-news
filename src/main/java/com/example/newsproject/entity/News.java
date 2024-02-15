@@ -12,12 +12,15 @@ import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "news")
 @NoArgsConstructor
+@Indexed
 public class News {
 
     @Id
@@ -26,9 +29,11 @@ public class News {
     private LocalDateTime time;
     private LocalDateTime updateTime;
 
+    @FullTextField
     @Column(nullable = false)
     private String title;
 
+    @FullTextField
     @Column(nullable = false)
     private String text;
 

@@ -91,4 +91,8 @@ public class NewsServiceImpl implements NewsService {
                 .block();
     }
 
+    public Page<News> search(String queryString, Pageable pageable) {
+        return newsRepository.search(queryString, pageable);
+    }
+
 }
