@@ -1,4 +1,4 @@
-databaseChangeLog:
+  databaseChangeLog:
   - include:
       file: db/changelog/ddl/001-changelog-create-table-news.xml
   - include:
