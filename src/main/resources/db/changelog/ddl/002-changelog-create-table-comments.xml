@@ -4,7 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="001" author="rusakovich" dbms="postgresql">
+    <changeSet id="002" author="rusakovich" dbms="postgresql" context="prod, test">
         <sql>
             create table if not exists comments
             (

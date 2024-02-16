@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="005" author="rusakovich" dbms="postgresql" context="test">
+        <sql>
+            truncate table news;
+            truncate table comments;
+
+            INSERT INTO news (time, update_time, title, text)
+            VALUES (NOW(), NOW(), 'Новость 1', 'Текст новости 1'),
+                   (NOW(), NOW(), 'Новость 22', 'Текст новости 2'),
+                   (NOW(), NOW(), 'Новинки', 'привет текст 2'),
+                   (NOW(), NOW(), 'текст в названии', 'вот это новость я не знаю'),
+                   (NOW(), NOW(), 'новокаша', 'текстовыделитель')
+            RETURNING id;
+
+
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'Комментарий 1', 'Пользователь 1', 1),
+                   (NOW(), NOW(), 'Комментарий 2', 'Пользователь 2', 1),
+                   (NOW(), NOW(), 'Комментарий 1', 'Пользователь 1', 2),
+                   (NOW(), NOW(), 'Комментарий 2', 'Пользователь 2', 2)
+            RETURNING id;
+        </sql>
+    </changeSet>
+</databaseChangeLog>

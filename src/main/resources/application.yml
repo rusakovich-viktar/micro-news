@@ -1,12 +1,11 @@
 spring:
-  #  profiles:
-  #    active: test
+  profiles:
+    default: prod
+
+#    active: prod
+
   application:
     name: micro-news
-  datasource:
-    url: jdbc:postgresql://localhost:5432/news_comments
-    username: postgres
-    password: postgres
   jpa:
     properties:
       hibernate:
@@ -19,10 +18,13 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: none
+
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
-#    contexts: dev
+    contexts: prod
+
+
 logging:
   level:
     org:
@@ -35,8 +37,4 @@ logging:
 server:
   port: 8081
 
-
-#cache:
-#  algorithm: LRU
-#  capacity: 50
 
