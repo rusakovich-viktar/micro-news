@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="001" author="rusakovich" dbms="postgresql">
+        <sql>
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'первый', 'user1', 1),
+                   (NOW(), NOW(), 'хорошая статья', 'user2', 1),
+                   (NOW(), NOW(), 'неплохо', 'user3', 1),
+                   (NOW(), NOW(), 'отлично', 'user4', 1),
+                   (NOW(), NOW(), 'мм, очень интересно', 'user5', 1),
+                   (NOW(), NOW(), 'спасибо за информацию', 'user6', 1),
+                   (NOW(), NOW(), 'полезно знать', 'user7', 1),
+                   (NOW(), NOW(), 'хорошо написано', 'user8', 1),
+                   (NOW(), NOW(), 'что я сейчас прочитал', 'user9', 1),
+                   (NOW(), NOW(), 'замечательно', 'user10', 1);
+
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'первый', 'user1', 2),
+                   (NOW(), NOW(), 'хорошая статья', 'user2', 2),
+                   (NOW(), NOW(), 'неплохо', 'user3', 2),
+                   (NOW(), NOW(), 'отлично', 'user4', 2),
+                   (NOW(), NOW(), 'мм, очень интересно', 'user5', 2),
+                   (NOW(), NOW(), 'спасибо за информацию', 'user6', 2),
+                   (NOW(), NOW(), 'полезно знать', 'user7', 2),
+                   (NOW(), NOW(), 'хорошо написано', 'user8', 2),
+                   (NOW(), NOW(), 'что я сейчас прочитал', 'user9', 2),
+                   (NOW(), NOW(), 'замечательно', 'user10', 2);
+
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'интересно', 'user1', 3),
+                   (NOW(), NOW(), 'хорошая статья', 'user2', 3),
+                   (NOW(), NOW(), 'неплохо', 'user3', 3),
+                   (NOW(), NOW(), 'отлично', 'user4', 3),
+                   (NOW(), NOW(), 'согласен', 'user5', 3),
+                   (NOW(), NOW(), 'спасибо за информацию', 'user6', 3),
+                   (NOW(), NOW(), 'полезно знать', 'user7', 3),
+                   (NOW(), NOW(), 'хорошо написано', 'user8', 3),
+                   (NOW(), NOW(), 'информативно', 'user9', 3),
+                   (NOW(), NOW(), 'замечательно', 'user10', 3);
+
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'интересно', 'user1', 4),
+                   (NOW(), NOW(), 'хорошая статья', 'user2', 4),
+                   (NOW(), NOW(), 'неплохо', 'user3', 4),
+                   (NOW(), NOW(), 'отлично', 'user4', 4),
+                   (NOW(), NOW(), 'согласен', 'user5', 4),
+                   (NOW(), NOW(), 'спасибо за информацию', 'user6', 4),
+                   (NOW(), NOW(), 'полезно знать', 'user7', 4),
+                   (NOW(), NOW(), 'хорошо написано', 'user8', 4),
+                   (NOW(), NOW(), 'информативно', 'user9', 4),
+                   (NOW(), NOW(), 'замечательно', 'user10', 4);
+
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'интересно', 'user1', 5),
+                   (NOW(), NOW(), 'хорошая статья', 'user2', 5),
+                   (NOW(), NOW(), 'неплохо', 'user3', 5),
+                   (NOW(), NOW(), 'отлично', 'user4', 5),
+                   (NOW(), NOW(), 'согласен', 'user5', 5),
+                   (NOW(), NOW(), 'спасибо за информацию', 'user6', 5),
+                   (NOW(), NOW(), 'полезно знать', 'user7', 5),
+                   (NOW(), NOW(), 'хорошо написано', 'user8', 5),
+                   (NOW(), NOW(), 'информативно', 'user9', 5),
+                   (NOW(), NOW(), 'замечательно', 'user10', 5);
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'интересно', 'user1', 6),
+                   (NOW(), NOW(), 'хорошая статья', 'user2', 6),
+                   (NOW(), NOW(), 'неплохо', 'user3', 6),
+                   (NOW(), NOW(), 'отлично', 'user4', 6),
+                   (NOW(), NOW(), 'согласен', 'user5', 6),
+                   (NOW(), NOW(), 'спасибо за информацию', 'user6', 6),
+                   (NOW(), NOW(), 'полезно знать', 'user7', 6),
+                   (NOW(), NOW(), 'хорошо написано', 'user8', 6),
+                   (NOW(), NOW(), 'информативно', 'user9', 6),
+                   (NOW(), NOW(), 'замечательно', 'user10', 6);
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'интересно', 'user1', 7),
+                   (NOW(), NOW(), 'хорошая статья', 'user2', 7),
+                   (NOW(), NOW(), 'неплохо', 'user3', 7),
+                   (NOW(), NOW(), 'отлично', 'user4', 7),
+                   (NOW(), NOW(), 'согласен', 'user5', 7),
+                   (NOW(), NOW(), 'спасибо за информацию', 'user6', 7),
+                   (NOW(), NOW(), 'полезно знать', 'user7', 7),
+                   (NOW(), NOW(), 'хорошо написано', 'user8', 7),
+                   (NOW(), NOW(), 'информативно', 'user9', 7),
+                   (NOW(), NOW(), 'замечательно', 'user10', 7);
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'интересно', 'user1', 8),
+                   (NOW(), NOW(), 'хорошая статья', 'user2', 8),
+                   (NOW(), NOW(), 'неплохо', 'user3', 8),
+                   (NOW(), NOW(), 'отлично', 'user4', 8),
+                   (NOW(), NOW(), 'согласен', 'user5', 8),
+                   (NOW(), NOW(), 'спасибо за информацию', 'user6', 8),
+                   (NOW(), NOW(), 'полезно знать', 'user7', 8),
+                   (NOW(), NOW(), 'хорошо написано', 'user8', 8),
+                   (NOW(), NOW(), 'информативно', 'user9', 8),
+                   (NOW(), NOW(), 'замечательно', 'user10', 8);
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'интересно', 'user1', 9),
+                   (NOW(), NOW(), 'хорошая статья', 'user2', 9),
+                   (NOW(), NOW(), 'неплохо', 'user3', 9),
+                   (NOW(), NOW(), 'отлично', 'user4', 9),
+                   (NOW(), NOW(), 'полезно знать', 'user7', 9),
+                   (NOW(), NOW(), 'согласен', 'user5', 9),
+                   (NOW(), NOW(), 'спасибо за информацию', 'user6', 9),
+                   (NOW(), NOW(), 'хорошо написано', 'user8', 9),
+                   (NOW(), NOW(), 'информативно', 'user9', 9),
+                   (NOW(), NOW(), 'замечательно', 'user10', 9);
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'интересно', 'user1', 10),
+                   (NOW(), NOW(), 'хорошая статья', 'user2', 10),
+                   (NOW(), NOW(), 'отлично', 'user4', 10),
+                   (NOW(), NOW(), 'согласен', 'user5', 10),
+                   (NOW(), NOW(), 'неплохо', 'user3', 10),
+                   (NOW(), NOW(), 'спасибо за информацию', 'user6', 10),
+                   (NOW(), NOW(), 'хорошо написано', 'user8', 10),
+                   (NOW(), NOW(), 'информативно', 'user9', 10),
+                   (NOW(), NOW(), 'полезно знать', 'user7', 10),
+                   (NOW(), NOW(), 'замечательно', 'user10', 10);
+
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'отличная новость', 'user1', 11),
+                   (NOW(), NOW(), 'информация на высоте', 'user2', 11),
+                   (NOW(), NOW(), 'захватывающе', 'user3', 11),
+                   (NOW(), NOW(), 'впечатляет', 'user4', 11),
+                   (NOW(), NOW(), 'важно знать', 'user5', 11),
+                   (NOW(), NOW(), 'познавательно', 'user6', 11),
+                   (NOW(), NOW(), 'прекрасно', 'user7', 11),
+                   (NOW(), NOW(), 'здорово', 'user8', 11),
+                   (NOW(), NOW(), 'люблю такие статьи', 'user9', 11),
+                   (NOW(), NOW(), 'всегда интересно читать', 'user0', 11);
+
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'отличная новость', 'user11', 12),
+                   (NOW(), NOW(), 'информация на высоте', 'user12', 12),
+                   (NOW(), NOW(), 'захватывающе', 'user13', 12),
+                   (NOW(), NOW(), 'впечатляет', 'user14', 12),
+                   (NOW(), NOW(), 'важно знать', 'user15', 12),
+                   (NOW(), NOW(), 'познавательно', 'user16', 12),
+                   (NOW(), NOW(), 'прекрасно', 'user17', 12),
+                   (NOW(), NOW(), 'здорово', 'user18', 12),
+                   (NOW(), NOW(), 'люблю такие статьи', 'user19', 12),
+                   (NOW(), NOW(), 'всегда интересно читать', 'user20', 12);
+
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'отличная новость', 'user11', 13),
+                   (NOW(), NOW(), 'информация на высоте', 'user12', 13),
+                   (NOW(), NOW(), 'захватывающе', 'user13', 13),
+                   (NOW(), NOW(), 'впечатляет', 'user14', 13),
+                   (NOW(), NOW(), 'важно знать', 'user15', 13),
+                   (NOW(), NOW(), 'познавательно', 'user16', 13),
+                   (NOW(), NOW(), 'прекрасно', 'user17', 13),
+                   (NOW(), NOW(), 'здорово', 'user18', 13),
+                   (NOW(), NOW(), 'люблю такие статьи', 'user19', 13),
+                   (NOW(), NOW(), 'всегда интересно читать', 'user20', 13);
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'интересно', 'user1', 14),
+                   (NOW(), NOW(), 'хорошая статья', 'user2', 14),
+                   (NOW(), NOW(), 'отлично', 'user4', 14),
+                   (NOW(), NOW(), 'согласен', 'user5', 14),
+                   (NOW(), NOW(), 'неплохо', 'user3', 14),
+                   (NOW(), NOW(), 'спасибо за информацию', 'user6', 14),
+                   (NOW(), NOW(), 'хорошо написано', 'user8', 14),
+                   (NOW(), NOW(), 'информативно', 'user9', 14),
+                   (NOW(), NOW(), 'полезно знать', 'user7', 14),
+                   (NOW(), NOW(), 'замечательно', 'user10', 14);
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'интересно', 'user1', 15),
+                   (NOW(), NOW(), 'хорошая статья', 'user2', 15),
+                   (NOW(), NOW(), 'отлично', 'user4', 15),
+                   (NOW(), NOW(), 'согласен', 'user5', 15),
+                   (NOW(), NOW(), 'неплохо', 'user3', 15),
+                   (NOW(), NOW(), 'спасибо за информацию', 'user6', 15),
+                   (NOW(), NOW(), 'хорошо написано', 'user8', 15),
+                   (NOW(), NOW(), 'информативно', 'user9', 15),
+                   (NOW(), NOW(), 'полезно знать', 'user7', 15),
+                   (NOW(), NOW(), 'замечательно', 'user10', 15);
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'интересно', 'user1', 16),
+                   (NOW(), NOW(), 'хорошая статья', 'user2', 16),
+                   (NOW(), NOW(), 'отлично', 'user4', 16),
+                   (NOW(), NOW(), 'согласен', 'user5', 16),
+                   (NOW(), NOW(), 'неплохо', 'user3', 16),
+                   (NOW(), NOW(), 'спасибо за информацию', 'user6', 16),
+                   (NOW(), NOW(), 'хорошо написано', 'user8', 16),
+                   (NOW(), NOW(), 'информативно', 'user9', 16),
+                   (NOW(), NOW(), 'полезно знать', 'user7', 16),
+                   (NOW(), NOW(), 'замечательно', 'user10', 16);
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'интересно', 'user1', 17),
+                   (NOW(), NOW(), 'хорошая статья', 'user2', 17),
+                   (NOW(), NOW(), 'неплохо', 'user3', 17),
+                   (NOW(), NOW(), 'отлично', 'user4', 17),
+                   (NOW(), NOW(), 'согласен', 'user5', 17),
+                   (NOW(), NOW(), 'спасибо за информацию', 'user6', 17),
+                   (NOW(), NOW(), 'полезно знать', 'user7', 17),
+                   (NOW(), NOW(), 'хорошо написано', 'user8', 17),
+                   (NOW(), NOW(), 'информативно', 'user9', 17),
+                   (NOW(), NOW(), 'замечательно', 'user10', 17);
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'интересно', 'user1', 18),
+                   (NOW(), NOW(), 'хорошая статья', 'user2', 18),
+                   (NOW(), NOW(), 'неплохо', 'user3', 18),
+                   (NOW(), NOW(), 'отлично', 'user4', 18),
+                   (NOW(), NOW(), 'согласен', 'user5', 18),
+                   (NOW(), NOW(), 'спасибо за информацию', 'user6', 18),
+                   (NOW(), NOW(), 'полезно знать', 'user7', 18),
+                   (NOW(), NOW(), 'хорошо написано', 'user8', 18),
+                   (NOW(), NOW(), 'информативно', 'user9', 18),
+                   (NOW(), NOW(), 'замечательно', 'user10', 18);
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'интересно', 'user1', 19),
+                   (NOW(), NOW(), 'неплохо', 'user3', 19),
+                   (NOW(), NOW(), 'отлично', 'user4', 19),
+                   (NOW(), NOW(), 'хорошая статья', 'user2', 19),
+                   (NOW(), NOW(), 'согласен', 'user5', 19),
+                   (NOW(), NOW(), 'спасибо за информацию', 'user6', 19),
+                   (NOW(), NOW(), 'хорошо написано', 'user8', 19),
+                   (NOW(), NOW(), 'информативно', 'user9', 19),
+                   (NOW(), NOW(), 'полезно знать', 'user7', 19),
+                   (NOW(), NOW(), 'замечательно', 'user10', 19);
+            INSERT INTO comments (time, update_time, text, username, news_id)
+            VALUES (NOW(), NOW(), 'интересно', 'user1', 20),
+                   (NOW(), NOW(), 'хорошая статья', 'user2', 20),
+                   (NOW(), NOW(), 'отлично', 'user4', 20),
+                   (NOW(), NOW(), 'согласен', 'user5', 20),
+                   (NOW(), NOW(), 'неплохо', 'user3', 20),
+                   (NOW(), NOW(), 'полезно знать', 'user7', 20),
+                   (NOW(), NOW(), 'хорошо написано', 'user8', 20),
+                   (NOW(), NOW(), 'что я сейчас прочитал', 'user9', 20),
+                   (NOW(), NOW(), 'мм, очень интересно', 'user6', 20),
+                   (NOW(), NOW(), 'замечательно', 'user10', 20);
+
+        </sql>
+    </changeSet>
+</databaseChangeLog>

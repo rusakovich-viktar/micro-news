@@ -31,7 +31,7 @@ dependencies {
 //    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-//    implementation 'org.liquibase:liquibase-core'
+    implementation 'org.liquibase:liquibase-core'
 
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
@@ -49,7 +49,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 //    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.testcontainers:junit-jupiter'
-//    testImplementation 'org.testcontainers:postgresql'
+    testImplementation 'org.testcontainers:postgresql'
 }
 
 compileJava {
