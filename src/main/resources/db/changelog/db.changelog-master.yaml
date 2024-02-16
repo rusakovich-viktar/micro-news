@@ -4,6 +4,8 @@ databaseChangeLog:
   - include:
       file: db/changelog/ddl/002-changelog-create-table-comments.xml
   - include:
-      file: db/changelog/dml/001-changelog-insert-data-news.xml
+      file: db/changelog/dml/003-changelog-insert-data-news.xml
   - include:
-      file: db/changelog/dml/002-changelog-insert-data-comments.xml
+      file: db/changelog/dml/004-changelog-insert-data-comments.xml
+  - include:
+      file: db/changelog/dml/005-changelog-insert-test-data.xml
