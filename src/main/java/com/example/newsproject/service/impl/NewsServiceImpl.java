@@ -11,6 +11,7 @@ import com.example.newsproject.repository.NewsRepository;
 import com.example.newsproject.service.NewsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Transactional
 public class NewsServiceImpl implements NewsService {
 
+
+    public final String PORT_OTHER_MICROSERVICE = "8082";
+    public final String PREFIX_HTTP = "http://";
+    @Value("${map.value}")
+    public String IP;
     private final NewsRepository newsRepository;
     private final NewsMapper newsMapper;
     private final WebClient webClient;
@@ -71,7 +77,7 @@ public class NewsServiceImpl implements NewsService {
     @Transactional(readOnly = true)
     @Override
     public ResponseEntity<CommentListResponseDto> getCommentsByNewsId(Long newsId, Pageable pageable) {
-        String commentsServiceUrl = "http://localhost:8082/news/" + newsId + "/comments";
+        String commentsServiceUrl = PREFIX_HTTP + IP + ":" + PORT_OTHER_MICROSERVICE + "/news/" + newsId + "/comments";
         String url = commentsServiceUrl + "?page=" + pageable.getPageNumber() + "&size=" + pageable.getPageSize();
         CommentListResponseDto comments = webClient.get()
                 .uri(url)
@@ -83,7 +89,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public CommentResponseDto getCommentByNewsIdAndCommentId(Long newsId, Long commentId) {
-        String commentsServiceUrl = "http://localhost:8082/news/" + newsId + "/comments/" + commentId;
+        String commentsServiceUrl = PREFIX_HTTP + IP + ":" + PORT_OTHER_MICROSERVICE + "/news/" + newsId + "/comments/" + commentId;
         return webClient.get()
                 .uri(commentsServiceUrl)
                 .retrieve()
