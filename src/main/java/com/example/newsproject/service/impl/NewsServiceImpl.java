@@ -1,5 +1,6 @@
 package com.example.newsproject.service.impl;
 
+import com.example.newsproject.cache.proxy.annotation.Cacheable;
 import com.example.newsproject.dto.request.NewsRequestDto;
 import com.example.newsproject.dto.response.CommentListResponseDto;
 import com.example.newsproject.dto.response.CommentResponseDto;
@@ -35,6 +36,7 @@ public class NewsServiceImpl implements NewsService {
     private final WebClient webClient;
 
     @Override
+    @Cacheable
     public NewsResponseDto createNews(NewsRequestDto newsRequestDto) {
         News news = newsMapper.toEntity(newsRequestDto);
         News savedNews = newsRepository.save(news);
@@ -42,6 +44,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable
     @Override
     public NewsResponseDto getNewsById(Long id) {
         News news = newsRepository
@@ -52,6 +55,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
+    @Cacheable
     public NewsResponseDto updateNews(Long id, NewsRequestDto newsRequestDto) {
         News news = newsRepository.findById(id)
                 .orElseThrow(() -> EntityNotFoundException.of(News.class, id));
@@ -61,6 +65,7 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
+    @Cacheable
     public void deleteNews(Long id) {
         News news = newsRepository.findById(id)
                 .orElseThrow(() -> EntityNotFoundException.of(News.class, id));
