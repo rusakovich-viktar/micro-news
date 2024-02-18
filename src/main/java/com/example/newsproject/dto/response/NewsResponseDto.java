@@ -1,14 +1,17 @@
 package com.example.newsproject.dto.response;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
-public class NewsResponseDto {
+public class NewsResponseDto implements Serializable {
 
     private Long id;
     private LocalDateTime time;

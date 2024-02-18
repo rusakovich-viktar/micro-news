@@ -15,5 +15,9 @@ spring:
             type: elasticsearch
             hosts: elasticsearch:9200
 
+  data:
+    redis:
+      host: redis
+
 map:
   value: micro-comments

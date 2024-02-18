@@ -2,7 +2,7 @@ spring:
   profiles:
     default: dev
 
-    active: prod
+#    active: prod
 
   application:
     name: micro-news
@@ -20,6 +20,16 @@ spring:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
     contexts: prod
+
+
+
+
+  elasticsearch:
+    restclient:
+      sniffer:
+        interval: 60m
+        delay-after-failure: 30m
+
 
 
 logging:

@@ -13,8 +13,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,6 +33,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @RequiredArgsConstructor
 @Component
+@Profile("dev")
 public class NewsProxy {
 
     @Value("${cache.algorithm}")
@@ -45,20 +46,9 @@ public class NewsProxy {
     private final StampedLock lock = new StampedLock();
 
 
-    @Pointcut("@annotation(com.example.newsproject.cache.proxy.annotation.Cacheable)")
-    public void createCacheable() {
-    }
-
-    @Pointcut("@annotation(com.example.newsproject.cache.proxy.annotation.Cacheable) && execution(* com.example.newsproject.service.NewsService.deleteNews(..)) ")
-    public void deleteCacheable() {
-    }
-
-    @Pointcut("@annotation(com.example.newsproject.cache.proxy.annotation.Cacheable) && execution(* com.example.newsproject.service.NewsService.updateNews(..))")
-    public void updateCacheable() {
-    }
-
     @SuppressWarnings("checkstyle:IllegalCatch")
-    @Around("@annotation(com.example.newsproject.cache.proxy.annotation.Cacheable) && execution(* com.example.newsproject.service.NewsService.getNewsById(..))")
+    @Around("@annotation(com.example.newsproject.cache.proxy.annotation.CacheableAop) " +
+            "&& execution(* com.example.newsproject.service.NewsService.getNewsById(..))")
     public Object getNews(ProceedingJoinPoint joinPoint) throws Throwable {
         Object[] args = joinPoint.getArgs();
         Long id = (Long) args[0];
@@ -92,25 +82,31 @@ public class NewsProxy {
         return result;
     }
 
-    @AfterReturning(pointcut = "createCacheable()", returning = "response", argNames = "response")
+
+    @AfterReturning(pointcut = "@annotation(com.example.newsproject.cache.proxy.annotation.CacheableAop) && " +
+            "execution(* com.example.newsproject.service.NewsService.createNews(..))", returning = "response")
     public void createNews(NewsResponseDto response) {
         userCache.get().put(response.getId(), response);
         log.info("News with id {} was added to cache", response.getId());
 
     }
 
-    @AfterReturning(pointcut = "deleteCacheable() && args(id)")
+
+    @AfterReturning(pointcut = "@annotation(com.example.newsproject.cache.proxy.annotation.CacheableAop) " +
+            "&& execution(* com.example.newsproject.service.NewsService.deleteNews(Long)) && args(id)",
+            argNames = "id")
     public void deleteNews(Long id) {
         userCache.get().remove(id);
         log.info("News with id {} was removed from cache", id);
 
     }
 
-    @AfterReturning(pointcut = "updateCacheable() && args(id, ..)", argNames = "id,retVal", returning = "retVal")
+    @AfterReturning(pointcut = "@annotation(com.example.newsproject.cache.proxy.annotation.CacheableAop) &&" +
+            " execution(* com.example.newsproject.service.NewsService.updateNews(Long, ..)) && args(id, ..)",
+            argNames = "id,retVal", returning = "retVal")
     public void updateNews(Long id, NewsResponseDto retVal) {
-
         userCache.get().put(id, retVal);
-        log.info("News with id {} was updated and >", id);
+        log.info("News with id {} was updated in cache", id);
 
 
     }
