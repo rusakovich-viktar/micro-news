@@ -17,13 +17,15 @@ import lombok.Setter;
 public class ErrorResponse {
 
     private String timestamp;
+    private int status;
+    private String error;
     private String message;
-    private String details;
 
-    public ErrorResponse(String message, String details) {
-        this.timestamp = LocalDateTime.now().format(ISO_LOCAL_DATE_TIME);
+    public ErrorResponse(int status, String error, String message) {
+        this.status = status;
+        this.error = error;
         this.message = message;
-        this.details = details;
+        this.timestamp = LocalDateTime.now().format(ISO_LOCAL_DATE_TIME);
     }
 
 }

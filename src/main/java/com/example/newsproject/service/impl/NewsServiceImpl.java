@@ -6,7 +6,7 @@ import com.example.newsproject.dto.response.CommentListResponseDto;
 import com.example.newsproject.dto.response.CommentResponseDto;
 import com.example.newsproject.dto.response.NewsResponseDto;
 import com.example.newsproject.entity.News;
-import com.example.newsproject.exception.EntityNotFoundException;
+import com.example.newsproject.exception.EntityNotFoundExceptionCustom;
 import com.example.newsproject.mapper.NewsMapper;
 import com.example.newsproject.repository.NewsRepository;
 import com.example.newsproject.service.NewsService;
@@ -57,7 +57,7 @@ public class NewsServiceImpl implements NewsService {
         News news = newsRepository
                 .findById(id)
                 .orElseThrow(() ->
-                        EntityNotFoundException.of(News.class, id));
+                        EntityNotFoundExceptionCustom.of(News.class, id));
         return newsMapper.toDto(news);
     }
 
@@ -66,7 +66,7 @@ public class NewsServiceImpl implements NewsService {
     @CachePut(value = "news", key = "#id")
     public NewsResponseDto updateNews(Long id, NewsRequestDto newsRequestDto) {
         News news = newsRepository.findById(id)
-                .orElseThrow(() -> EntityNotFoundException.of(News.class, id));
+                .orElseThrow(() -> EntityNotFoundExceptionCustom.of(News.class, id));
         newsMapper.updateFromDto(newsRequestDto, news);
         News updatedNews = newsRepository.save(news);
         return newsMapper.toDto(updatedNews);
@@ -76,7 +76,7 @@ public class NewsServiceImpl implements NewsService {
     @CacheableAop
     public void deleteNews(Long id) {
         News news = newsRepository.findById(id)
-                .orElseThrow(() -> EntityNotFoundException.of(News.class, id));
+                .orElseThrow(() -> EntityNotFoundExceptionCustom.of(News.class, id));
         newsRepository.delete(news);
     }
 

@@ -18,7 +18,7 @@ spring:
 map:
   value: localhost
 
-  cache:
+cache:
     algorithm: LRU
     capacity: 50
 
