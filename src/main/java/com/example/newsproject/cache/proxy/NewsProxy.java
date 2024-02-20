@@ -47,7 +47,7 @@ public class NewsProxy {
 
 
     @SuppressWarnings("checkstyle:IllegalCatch")
-    @Around("@annotation(com.example.newsproject.cache.proxy.annotation.CacheableAop) " +
+    @Around("@annotation(org.springframework.cache.annotation.Cacheable) " +
             "&& execution(* com.example.newsproject.service.NewsService.getNewsById(..))")
     public Object getNews(ProceedingJoinPoint joinPoint) throws Throwable {
         Object[] args = joinPoint.getArgs();
@@ -83,7 +83,7 @@ public class NewsProxy {
     }
 
 
-    @AfterReturning(pointcut = "@annotation(com.example.newsproject.cache.proxy.annotation.CacheableAop) && " +
+    @AfterReturning(pointcut = "@annotation(org.springframework.cache.annotation.CachePut) && " +
             "execution(* com.example.newsproject.service.NewsService.createNews(..))", returning = "response")
     public void createNews(NewsResponseDto response) {
         userCache.get().put(response.getId(), response);
@@ -92,7 +92,7 @@ public class NewsProxy {
     }
 
 
-    @AfterReturning(pointcut = "@annotation(com.example.newsproject.cache.proxy.annotation.CacheableAop) " +
+    @AfterReturning(pointcut = "@annotation(org.springframework.cache.annotation.CacheEvict) " +
             "&& execution(* com.example.newsproject.service.NewsService.deleteNews(Long)) && args(id)",
             argNames = "id")
     public void deleteNews(Long id) {
@@ -101,7 +101,7 @@ public class NewsProxy {
 
     }
 
-    @AfterReturning(pointcut = "@annotation(com.example.newsproject.cache.proxy.annotation.CacheableAop) &&" +
+    @AfterReturning(pointcut = "@annotation(org.springframework.cache.annotation.CachePut) &&" +
             " execution(* com.example.newsproject.service.NewsService.updateNews(Long, ..)) && args(id, ..)",
             argNames = "id,retVal", returning = "retVal")
     public void updateNews(Long id, NewsResponseDto retVal) {
