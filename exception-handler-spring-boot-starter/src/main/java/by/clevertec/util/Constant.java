@@ -1,4 +1,4 @@
-package com.example.newsproject.util;
+package by.clevertec.util;
 
 import lombok.experimental.UtilityClass;
 
@@ -13,4 +13,3 @@ public class Constant {
     }
 
 }
-

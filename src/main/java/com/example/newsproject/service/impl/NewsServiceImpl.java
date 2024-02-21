@@ -1,11 +1,11 @@
 package com.example.newsproject.service.impl;
 
+import by.clevertec.exception.EntityNotFoundExceptionCustom;
 import com.example.newsproject.dto.request.NewsRequestDto;
 import com.example.newsproject.dto.response.CommentListResponseDto;
 import com.example.newsproject.dto.response.CommentResponseDto;
 import com.example.newsproject.dto.response.NewsResponseDto;
 import com.example.newsproject.entity.News;
-import com.example.newsproject.exception.EntityNotFoundExceptionCustom;
 import com.example.newsproject.mapper.NewsMapper;
 import com.example.newsproject.repository.NewsRepository;
 import com.example.newsproject.service.NewsService;

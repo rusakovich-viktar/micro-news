@@ -1,11 +1,8 @@
-package com.example.newsproject.exception;
+package by.clevertec.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-/**
- * Исключение, которое выбрасывается, когда сущность не найдена.
- */
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class EntityNotFoundExceptionCustom extends RuntimeException {
 

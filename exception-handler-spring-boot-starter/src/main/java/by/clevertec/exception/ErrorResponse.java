@@ -1,4 +1,4 @@
-package com.example.newsproject.exception;
+package by.clevertec.exception;
 
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
@@ -7,10 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Класс для представления ошибки.
- * Содержит информацию о времени ошибки, сообщении об ошибке и подробностях.
- */
 @Getter
 @Setter
 @AllArgsConstructor

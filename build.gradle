@@ -42,6 +42,10 @@ dependencies {
     implementation 'org.hibernate.search:hibernate-search-backend-elasticsearch:7.0.0.Final'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
+    implementation 'by.clevertec:exception-handler-spring-boot-starter'
+    implementation project(path: ':exception-handler-spring-boot-starter')
+
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
