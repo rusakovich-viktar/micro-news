@@ -19,5 +19,3 @@ spring:
     redis:
       host: redis
 
-map:
-  value: micro-comments

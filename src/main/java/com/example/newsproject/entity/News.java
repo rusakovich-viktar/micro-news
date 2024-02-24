@@ -1,5 +1,6 @@
 package com.example.newsproject.entity;
 
+import com.example.newsproject.dto.response.CommentResponseDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,8 +9,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -41,6 +44,9 @@ public class News implements Serializable {
     @FullTextField
     @Column(nullable = false)
     private String text;
+
+    @Transient
+    private List<CommentResponseDto> comments;
 
     @PrePersist
     public void prePersist() {

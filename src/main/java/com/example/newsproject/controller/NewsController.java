@@ -2,7 +2,6 @@ package com.example.newsproject.controller;
 
 import com.example.newsproject.dto.request.NewsRequestDto;
 import com.example.newsproject.dto.response.CommentListResponseDto;
-import com.example.newsproject.dto.response.CommentResponseDto;
 import com.example.newsproject.dto.response.NewsResponseDto;
 import com.example.newsproject.service.NewsService;
 import jakarta.validation.Valid;
@@ -21,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/news")
+@RequestMapping("api/news")
 @RequiredArgsConstructor
-public class NewsController extends BaseController {
+public class NewsController {
 
     private final NewsService newsService;
 
@@ -37,7 +36,8 @@ public class NewsController extends BaseController {
 
     @GetMapping("/{id}")
     public ResponseEntity<NewsResponseDto> getNewsById(@PathVariable Long id) {
-        return ResponseEntity.ok(newsService.getNewsById(id));
+        NewsResponseDto newsById = newsService.getNewsById(id);
+        return ResponseEntity.ok(newsById);
     }
 
     @PutMapping("/{id}")
@@ -62,13 +62,8 @@ public class NewsController extends BaseController {
     public ResponseEntity<CommentListResponseDto> getCommentsByNewsId(@PathVariable Long newsId,
                                                                       Pageable pageable) {
         return newsService.getCommentsByNewsId(newsId, pageable);
-    }
 
-    @GetMapping("/{newsId}/comments/{commentId}")
-    public ResponseEntity<CommentResponseDto> getCommentByNewsIdAndCommentId(@PathVariable Long newsId,
-                                                                             @PathVariable Long commentId) {
-        return ResponseEntity.ok(newsService.getCommentByNewsIdAndCommentId(newsId, commentId));
-    }
 
+    }
 
 }

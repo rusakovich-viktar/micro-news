@@ -4,7 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="004" author="rusakovich" dbms="postgresql" context="prod">
+    <changeSet id="002" author="rusakovich" dbms="postgresql" context="prod">
         <sql>
             truncate table comments;
             INSERT INTO comments (time, update_time, text, username, news_id)

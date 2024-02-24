@@ -23,6 +23,6 @@ public interface NewsMapper {
 
     @Mapping(target = "id", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void updateFromDto(NewsRequestDto dto, @MappingTarget News entity);
+    void updateFromDtoToEntity(NewsRequestDto dto, @MappingTarget News entity);
 
 }

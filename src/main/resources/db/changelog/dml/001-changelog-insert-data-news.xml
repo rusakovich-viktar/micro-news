@@ -4,9 +4,9 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="003" author="rusakovich" dbms="postgresql" context="prod">
+    <changeSet id="001" author="rusakovich" dbms="postgresql" context="prod">
         <sql>
-            truncate table news;
+            truncate table news cascade;
             INSERT INTO news (time, update_time, title, text)
             VALUES ('2024-02-15 10:10:11.223344', '2024-02-15 10:10:11.223344',
                     'OpenAI может разрабатывать поисковик с возможностями искусственного интеллекта',

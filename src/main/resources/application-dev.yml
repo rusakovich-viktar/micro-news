@@ -15,10 +15,8 @@ spring:
             type: elasticsearch
             hosts: localhost:9200
 
-map:
-  value: localhost
 
 cache:
-    algorithm: LRU
-    capacity: 50
+  algorithm: LRU
+  capacity: 50
 
