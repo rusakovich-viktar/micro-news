@@ -3,7 +3,6 @@ package com.example.newsproject.service;
 import com.example.newsproject.dto.request.NewsRequestDto;
 import com.example.newsproject.dto.response.CommentListResponseDto;
 import com.example.newsproject.dto.response.NewsResponseDto;
-import com.example.newsproject.entity.News;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +27,4 @@ public interface NewsService {
     //    /* -	просмотр новости с комментариями относящимися к ней (с пагинацией)*/
     ResponseEntity<CommentListResponseDto> getCommentsByNewsId(Long newsId, Pageable pageable);
 
-    //
-    Page<News> search(String queryString, Pageable pageable);
 }

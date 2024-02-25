@@ -17,8 +17,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
-import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 
 @Entity
 @Getter
@@ -26,7 +24,6 @@ import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 @ToString
 @Table(name = "news")
 @NoArgsConstructor
-@Indexed
 public class News implements Serializable {
 
     @Id
@@ -37,11 +34,9 @@ public class News implements Serializable {
     @Column(nullable = false)
     private LocalDateTime updateTime;
 
-    @FullTextField
     @Column(nullable = false)
     private String title;
 
-    @FullTextField
     @Column(nullable = false)
     private String text;
 

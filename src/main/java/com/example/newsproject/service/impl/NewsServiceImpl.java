@@ -101,10 +101,4 @@ public class NewsServiceImpl implements NewsService {
         return ResponseEntity.ok(commentListResponseDto);
     }
 
-
-    public Page<News> search(String queryString, Pageable pageable) {
-        return newsRepository.search(queryString, pageable);
-    }
-
-
 }

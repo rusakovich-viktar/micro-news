@@ -37,13 +37,10 @@ dependencies {
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-    implementation 'org.hibernate.search:hibernate-search-mapper-orm:7.0.0.Final'
-    implementation 'org.hibernate.search:hibernate-search-backend-elasticsearch:7.0.0.Final'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.1.0'
 
     implementation 'by.clevertec:exception-handler-spring-boot-starter:0.0.1'
-
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
