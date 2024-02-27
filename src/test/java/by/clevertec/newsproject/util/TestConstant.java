@@ -16,12 +16,12 @@ public class TestConstant {
     public static final long INVALID_ID = 999L;
 
 
+    @UtilityClass
+    public class ExceptionMessages {
 
-@UtilityClass
-public class ExceptionMessages {
-    public static final String PREFIX_NOT_FOUND_CUSTOM_MESSAGE = " with id ";
-    public static final String POSTFIX_NOT_FOUND_CUSTOM_MESSAGE = " does not exist";
-}
+        public static final String PREFIX_NOT_FOUND_CUSTOM_MESSAGE = " with id ";
+        public static final String POSTFIX_NOT_FOUND_CUSTOM_MESSAGE = " does not exist";
+    }
 
     @UtilityClass
     public class Attributes {
@@ -33,6 +33,7 @@ public class ExceptionMessages {
 
     @UtilityClass
     public class Path {
+
         public static final String API_NEWS_URL = "/api/news/";
         public static final String API_NEWS = "/api/news";
         public static final String HTTP_LOCALHOST = "http://localhost:";

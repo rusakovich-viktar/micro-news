@@ -6,7 +6,6 @@ import static by.clevertec.newsproject.util.TestConstant.NEWS_TITLE;
 import static by.clevertec.newsproject.util.TestConstant.USERNAME;
 
 import by.clevertec.newsproject.dto.request.NewsRequestDto;
-import by.clevertec.newsproject.dto.response.CommentListResponseDto;
 import by.clevertec.newsproject.dto.response.CommentResponseDto;
 import by.clevertec.newsproject.dto.response.NewsResponseDto;
 import by.clevertec.newsproject.entity.News;

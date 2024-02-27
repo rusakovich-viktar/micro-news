@@ -3,11 +3,11 @@ package by.clevertec.newsproject.mapper;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import by.clevertec.newsproject.util.DataTestBuilder;
 import by.clevertec.newsproject.dto.request.NewsRequestDto;
 import by.clevertec.newsproject.dto.response.NewsResponseDto;
 import by.clevertec.newsproject.entity.News;
 import by.clevertec.newsproject.entity.News.Fields;
+import by.clevertec.newsproject.util.DataTestBuilder;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
@@ -48,7 +48,7 @@ class NewsMapperTest {
     }
 
     @Test
-    void testToEntityShouldReturnHouse() {
+    void testToEntityShouldReturnNews() {
         // given
         NewsRequestDto dto = DataTestBuilder.builder()
                 .build()
