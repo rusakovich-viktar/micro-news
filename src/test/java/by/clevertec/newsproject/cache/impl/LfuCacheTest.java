@@ -3,9 +3,9 @@ package by.clevertec.newsproject.cache.impl;
 import static by.clevertec.newsproject.util.TestConstant.Attributes.ONE;
 import static by.clevertec.newsproject.util.TestConstant.Attributes.THREE;
 import static by.clevertec.newsproject.util.TestConstant.Attributes.TWO;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import by.clevertec.newsproject.util.TestConstant.Attributes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
