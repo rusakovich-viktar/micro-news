@@ -2,8 +2,8 @@ package by.clevertec.newsproject.cache.proxy;
 
 
 import by.clevertec.newsproject.cache.Cache;
-import by.clevertec.newsproject.cache.impl.LruCache;
 import by.clevertec.newsproject.cache.impl.LfuCache;
+import by.clevertec.newsproject.cache.impl.LruCache;
 import by.clevertec.newsproject.dto.response.NewsResponseDto;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.StampedLock;

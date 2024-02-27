@@ -1,9 +1,9 @@
 package by.clevertec.newsproject.controller;
 
-import by.clevertec.newsproject.dto.request.NewsRequestDto;
-import by.clevertec.newsproject.dto.response.CommentListResponseDto;
 import by.clevertec.newsproject.dto.response.NewsResponseDto;
 import by.clevertec.newsproject.service.NewsService;
+import by.clevertec.newsproject.dto.request.NewsRequestDto;
+import by.clevertec.newsproject.dto.response.CommentListResponseDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

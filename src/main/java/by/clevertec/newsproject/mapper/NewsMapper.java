@@ -1,9 +1,8 @@
 package by.clevertec.newsproject.mapper;
 
-import by.clevertec.newsproject.dto.request.NewsRequestDto;
 import by.clevertec.newsproject.dto.response.NewsResponseDto;
 import by.clevertec.newsproject.entity.News;
-import java.util.List;
+import by.clevertec.newsproject.dto.request.NewsRequestDto;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -18,8 +17,6 @@ public interface NewsMapper {
     NewsResponseDto toDto(News entity);
 
     News toEntity(NewsRequestDto dto);
-
-    List<NewsResponseDto> toDtoList(List<News> news);
 
     @Mapping(target = "id", ignore = true)
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
