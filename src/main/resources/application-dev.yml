@@ -17,6 +17,6 @@ spring:
 
 
 cache:
-  algorithm: LRU
+  algorithm: LFU
   capacity: 50
 
