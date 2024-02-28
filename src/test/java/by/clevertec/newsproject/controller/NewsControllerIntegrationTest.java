@@ -1,8 +1,8 @@
 package by.clevertec.newsproject.controller;
 
 import static by.clevertec.newsproject.util.TestConstant.ID_ONE;
-import static by.clevertec.newsproject.util.TestConstant.Path.API_NEWS;
-import static by.clevertec.newsproject.util.TestConstant.Path.API_NEWS_URL;
+import static by.clevertec.newsproject.util.TestConstant.Path.NEWS;
+import static by.clevertec.newsproject.util.TestConstant.Path.NEWS_URL;
 import static by.clevertec.newsproject.util.TestConstant.Path.HTTP_LOCALHOST;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -45,13 +45,13 @@ public class NewsControllerIntegrationTest {
                                 .buildNews();
 
                         ResponseEntity<Void> postResponse = restTemplate
-                                .postForEntity(HTTP_LOCALHOST + port + API_NEWS, newNews, Void.class);
+                                .postForEntity(HTTP_LOCALHOST + port + NEWS, newNews, Void.class);
                         assertEquals(HttpStatus.CREATED, postResponse.getStatusCode());
 
                         Long id = newNews.getId();
 
                         ResponseEntity<NewsResponseDto> getResponse = restTemplate
-                                .getForEntity(HTTP_LOCALHOST + port + API_NEWS_URL + "{id}",
+                                .getForEntity(HTTP_LOCALHOST + port + NEWS_URL + "{id}",
                                         NewsResponseDto.class, id);
                         assertEquals(HttpStatus.OK, getResponse.getStatusCode());
                         assertEquals(newNews.getTitle(), getResponse.getBody().getTitle());
@@ -61,18 +61,18 @@ public class NewsControllerIntegrationTest {
                                 .build()
                                 .buildNewsRequestDto();
 
-                        restTemplate.put(HTTP_LOCALHOST + port + API_NEWS_URL + "{id}", updatedNews, ID_ONE);
+                        restTemplate.put(HTTP_LOCALHOST + port + NEWS_URL + "{id}", updatedNews, ID_ONE);
 
                         ResponseEntity<NewsResponseDto> updatedGetResponse = restTemplate
-                                .getForEntity(HTTP_LOCALHOST + port + API_NEWS_URL + "{id}",
+                                .getForEntity(HTTP_LOCALHOST + port + NEWS_URL + "{id}",
                                         NewsResponseDto.class, id);
                         assertEquals(HttpStatus.OK, updatedGetResponse.getStatusCode());
                         assertEquals(updatedNews.getTitle(), updatedGetResponse.getBody().getTitle());
 
-                        restTemplate.delete(HTTP_LOCALHOST + port + API_NEWS_URL + "{id}", ID_ONE);
+                        restTemplate.delete(HTTP_LOCALHOST + port + NEWS_URL + "{id}", ID_ONE);
 
                         ResponseEntity<NewsResponseDto> deletedGetResponse = restTemplate
-                                .getForEntity(HTTP_LOCALHOST + port + API_NEWS_URL + "{id}",
+                                .getForEntity(HTTP_LOCALHOST + port + NEWS_URL + "{id}",
                                         NewsResponseDto.class, id);
                         assertEquals(HttpStatus.NOT_FOUND, deletedGetResponse.getStatusCode());
                     } catch (Exception e) {

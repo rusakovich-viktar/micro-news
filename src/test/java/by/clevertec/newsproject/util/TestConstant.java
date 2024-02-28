@@ -34,8 +34,8 @@ public class TestConstant {
     @UtilityClass
     public class Path {
 
-        public static final String API_NEWS_URL = "/api/news/";
-        public static final String API_NEWS = "/api/news";
+        public static final String NEWS_URL = "/news/";
+        public static final String NEWS = "/news";
         public static final String HTTP_LOCALHOST = "http://localhost:";
     }
 

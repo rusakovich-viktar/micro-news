@@ -9,7 +9,9 @@ import by.clevertec.newsproject.entity.News;
 import by.clevertec.newsproject.entity.News.Fields;
 import by.clevertec.newsproject.util.DataTestBuilder;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 class NewsMapperTest {
 

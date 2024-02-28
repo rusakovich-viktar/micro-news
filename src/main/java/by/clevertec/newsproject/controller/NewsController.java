@@ -1,9 +1,9 @@
 package by.clevertec.newsproject.controller;
 
-import by.clevertec.newsproject.dto.response.NewsResponseDto;
-import by.clevertec.newsproject.service.NewsService;
 import by.clevertec.newsproject.dto.request.NewsRequestDto;
 import by.clevertec.newsproject.dto.response.CommentListResponseDto;
+import by.clevertec.newsproject.dto.response.NewsResponseDto;
+import by.clevertec.newsproject.service.NewsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/news")
+@RequestMapping("/news")
 @RequiredArgsConstructor
 public class NewsController {
 
@@ -61,7 +61,7 @@ public class NewsController {
     @GetMapping("/{newsId}/comments")
     public ResponseEntity<CommentListResponseDto> getCommentsByNewsId(@PathVariable Long newsId,
                                                                       Pageable pageable) {
-        return newsService.getCommentsByNewsId(newsId, pageable);
+        return ResponseEntity.ok(newsService.getCommentsByNewsId(newsId, pageable));
 
 
     }

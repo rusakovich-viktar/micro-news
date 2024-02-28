@@ -45,12 +45,12 @@ class NewsTest {
 
     @Test
     void testPreUpdate() throws Exception {
-        news.prePersist(); // Устанавливаем начальное время
+        news.prePersist();
         LocalDateTime initialTime = news.getTime();
 
         Thread.sleep(1000);
 
-        news.preUpdate(); // Обновляем время
+        news.preUpdate(); 
 
         LocalDateTime updateTime = news.getUpdateTime();
 

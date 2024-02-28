@@ -284,17 +284,20 @@ class NewsServiceImplTest {
                     .buildCommentResponseDto();
             Page<CommentResponseDto> page = new PageImpl<>(List.of(comment));
 
+            when(newsRepository.findById(ID_ONE))
+                    .thenReturn(Optional.of(news));
             when(commentClient.getCommentsByNewsId(ID_ONE, pageable))
                     .thenReturn(ResponseEntity.ok(page));
 
             // when
-            ResponseEntity<CommentListResponseDto> actual =
+            CommentListResponseDto actual =
                     newsService.getCommentsByNewsId(ID_ONE, pageable);
 
             // then
-            assertEquals(1, actual.getBody().getComments().size());
-            assertEquals(comment.getText(), actual.getBody().getComments().get(0).getText());
-            assertEquals(comment.getNewsId(), actual.getBody().getComments().get(0).getNewsId());
+            assertEquals(1, actual.getComments().size());
+            assertEquals(comment.getText(), actual.getComments().get(0).getText());
+            assertEquals(comment.getNewsId(), actual.getComments().get(0).getNewsId());
+            verify(newsRepository).findById(ID_ONE);
         }
 
         @Test
@@ -303,15 +306,18 @@ class NewsServiceImplTest {
             Pageable pageable = PageRequest.of(0, 5);
             Page<CommentResponseDto> page = new PageImpl<>(List.of());
 
+            when(newsRepository.findById(ID_ONE))
+                    .thenReturn(Optional.of(news));
             when(commentClient.getCommentsByNewsId(ID_ONE, pageable))
                     .thenReturn(ResponseEntity.ok(page));
 
             // when
-            ResponseEntity<CommentListResponseDto> actual =
+            CommentListResponseDto actual =
                     newsService.getCommentsByNewsId(ID_ONE, pageable);
 
             // then
-            assertTrue(actual.getBody().getComments().isEmpty());
+            assertTrue(actual.getComments().isEmpty());
+            verify(newsRepository).findById(ID_ONE);
         }
 
         @Test
@@ -321,6 +327,8 @@ class NewsServiceImplTest {
 
             when(commentClient.getCommentsByNewsId(ID_ONE, pageable))
                     .thenReturn(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null));
+            when(newsRepository.findById(ID_ONE))
+                    .thenReturn(Optional.of(news));
 
             // when
             Exception exception = assertThrows(RuntimeException.class, () ->

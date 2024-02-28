@@ -25,6 +25,6 @@ public interface NewsService {
     Page<NewsResponseDto> getAllNews(Pageable pageable);
 
     //    /* -	просмотр новости с комментариями относящимися к ней (с пагинацией)*/
-    ResponseEntity<CommentListResponseDto> getCommentsByNewsId(Long newsId, Pageable pageable);
+    CommentListResponseDto getCommentsByNewsId(Long newsId, Pageable pageable);
 
 }

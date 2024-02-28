@@ -4,8 +4,8 @@ import static by.clevertec.newsproject.util.TestConstant.ExceptionMessages.POSTF
 import static by.clevertec.newsproject.util.TestConstant.ExceptionMessages.PREFIX_NOT_FOUND_CUSTOM_MESSAGE;
 import static by.clevertec.newsproject.util.TestConstant.ID_ONE;
 import static by.clevertec.newsproject.util.TestConstant.INVALID_ID;
-import static by.clevertec.newsproject.util.TestConstant.Path.API_NEWS;
-import static by.clevertec.newsproject.util.TestConstant.Path.API_NEWS_URL;
+import static by.clevertec.newsproject.util.TestConstant.Path.NEWS;
+import static by.clevertec.newsproject.util.TestConstant.Path.NEWS_URL;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -41,7 +41,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 
 @RequiredArgsConstructor
@@ -67,7 +66,7 @@ class NewsControllerTest {
             when(newsService.getNewsById(expected.getId()))
                     .thenReturn(expected);
 
-            mockMvc.perform(get(API_NEWS_URL + expected.getId()))
+            mockMvc.perform(get(NEWS_URL + expected.getId()))
                     .andExpect(status().isOk())
                     .andExpect(content().json(objectMapper.writeValueAsString(expected)));
 
@@ -77,7 +76,7 @@ class NewsControllerTest {
         void getByIdShouldThrowNotFound_whenInvalidId() throws Exception {
 
             Long invalidId = INVALID_ID;
-            String url = API_NEWS_URL + invalidId;
+            String url = NEWS_URL + invalidId;
             EntityNotFoundExceptionCustom exception = new EntityNotFoundExceptionCustom
                     ("News" + PREFIX_NOT_FOUND_CUSTOM_MESSAGE + invalidId + POSTFIX_NOT_FOUND_CUSTOM_MESSAGE);
 
@@ -107,7 +106,7 @@ class NewsControllerTest {
             when(newsService.createNews(newsRequestDto))
                     .thenReturn(expected);
 
-            mockMvc.perform(post(API_NEWS)
+            mockMvc.perform(post(NEWS)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(newsRequestDto)))
                     .andExpect(status().isCreated())
@@ -127,7 +126,7 @@ class NewsControllerTest {
         void createNewsShouldReturnBadRequest_whenInvalidRequest() throws Exception {
             NewsRequestDto invalidNewsRequestDto = new NewsRequestDto();
 
-            mockMvc.perform(post(API_NEWS_URL)
+            mockMvc.perform(post(NEWS_URL)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(invalidNewsRequestDto)))
                     .andExpect(status().isNotFound());
@@ -155,7 +154,7 @@ class NewsControllerTest {
             when(newsService.updateNews(ID_ONE, newsRequestDto))
                     .thenReturn(expected);
 
-            mockMvc.perform(put(API_NEWS_URL + ID_ONE)
+            mockMvc.perform(put(NEWS_URL + ID_ONE)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(newsRequestDto)))
                     .andExpect(status().isOk())
@@ -174,7 +173,7 @@ class NewsControllerTest {
         void updateNewsShouldReturnBadRequest_whenInvalidRequest() throws Exception {
             NewsRequestDto invalidNewsRequestDto = new NewsRequestDto();
 
-            mockMvc.perform(put(API_NEWS_URL + ID_ONE)
+            mockMvc.perform(put(NEWS_URL + ID_ONE)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(invalidNewsRequestDto)))
                     .andExpect(status().isBadRequest());
@@ -192,7 +191,7 @@ class NewsControllerTest {
         void deleteNewsShouldReturnNoContent() throws Exception {
 
 
-            mockMvc.perform(delete(API_NEWS_URL + ID_ONE))
+            mockMvc.perform(delete(NEWS_URL + ID_ONE))
                     .andExpect(status().isNoContent());
 
             verify(newsService, times(1))
@@ -219,7 +218,7 @@ class NewsControllerTest {
             when(newsService.getAllNews(PageRequest.of(pageNumber, pageSize)))
                     .thenReturn(new PageImpl<>(expectedNews));
 
-            mockMvc.perform(get(API_NEWS)
+            mockMvc.perform(get(NEWS)
                             .param("page", String.valueOf(pageNumber))
                             .param("size", String.valueOf(pageSize)))
                     .andExpect(status().isOk())
@@ -258,9 +257,9 @@ class NewsControllerTest {
             CommentListResponseDto expected = new CommentListResponseDto(expectedComments);
 
             when(newsService.getCommentsByNewsId(newsId, PageRequest.of(pageNumber, pageSize)))
-                    .thenReturn(ResponseEntity.ok(expected));
+                    .thenReturn(expected);
 
-            mockMvc.perform(get(API_NEWS_URL + newsId + "/comments")
+            mockMvc.perform(get(NEWS_URL + newsId + "/comments")
                             .param("page", String.valueOf(pageNumber))
                             .param("size", String.valueOf(pageSize)))
                     .andExpect(status().isOk())
@@ -279,7 +278,7 @@ class NewsControllerTest {
                             ("News" + PREFIX_NOT_FOUND_CUSTOM_MESSAGE + invalidNewsId +
                                     POSTFIX_NOT_FOUND_CUSTOM_MESSAGE));
 
-            mockMvc.perform(get(API_NEWS_URL + invalidNewsId + "/comments")
+            mockMvc.perform(get(NEWS_URL + invalidNewsId + "/comments")
                             .param("page", "1")
                             .param("size", "15"))
                     .andExpect(status().isNotFound());

@@ -76,34 +76,6 @@ class NewsProxyTest {
             verify(proceedingJoinPoint, times(0)).proceed();
         }
 
-        @Test
-        void testCreateNews() throws Throwable {
-
-            News news = DataTestBuilder.builder()
-                    .build()
-                    .buildNews();
-
-            NewsResponseDto expected = DataTestBuilder.builder()
-                    .build()
-                    .buildNewsResponseDto();
-
-            NewsRequestDto newsRequestDto = DataTestBuilder.builder()
-                    .build()
-                    .buildNewsRequestDto();
-
-            when(newsMapper.toEntity(newsRequestDto)).thenReturn(news);
-            when(newsService.getNewsById(news.getId())).thenReturn(expected);
-
-            newsProxy.createNews(expected);
-
-            when(proceedingJoinPoint.getArgs()).thenReturn(new Object[]{news.getId()});
-            when(proceedingJoinPoint.proceed()).thenReturn(expected);
-
-            NewsResponseDto result = (NewsResponseDto) newsProxy.getNews(proceedingJoinPoint);
-
-            assertEquals(expected.getId(), result.getId());
-
-        }
 
         @Test
         void testGetNewsReturnNewsFromCache_whenOptimisticLockInvalidated() throws Throwable {
@@ -135,6 +107,34 @@ class NewsProxyTest {
         }
     }
 
+    @Test
+    void testCreateNews() throws Throwable {
+
+        News news = DataTestBuilder.builder()
+                .build()
+                .buildNews();
+
+        NewsResponseDto expected = DataTestBuilder.builder()
+                .build()
+                .buildNewsResponseDto();
+
+        NewsRequestDto newsRequestDto = DataTestBuilder.builder()
+                .build()
+                .buildNewsRequestDto();
+
+        when(newsMapper.toEntity(newsRequestDto)).thenReturn(news);
+        when(newsService.getNewsById(news.getId())).thenReturn(expected);
+
+        newsProxy.createNews(expected);
+
+        when(proceedingJoinPoint.getArgs()).thenReturn(new Object[]{news.getId()});
+        when(proceedingJoinPoint.proceed()).thenReturn(expected);
+
+        NewsResponseDto result = (NewsResponseDto) newsProxy.getNews(proceedingJoinPoint);
+
+        assertEquals(expected.getId(), result.getId());
+
+    }
 
     @Test
     void testDeleteNews() throws Exception {

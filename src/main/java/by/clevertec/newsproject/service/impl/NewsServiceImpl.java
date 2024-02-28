@@ -2,11 +2,11 @@ package by.clevertec.newsproject.service.impl;
 
 import by.clevertec.exception.EntityNotFoundExceptionCustom;
 import by.clevertec.newsproject.client.CommentClient;
+import by.clevertec.newsproject.dto.request.NewsRequestDto;
+import by.clevertec.newsproject.dto.response.CommentListResponseDto;
 import by.clevertec.newsproject.dto.response.CommentResponseDto;
 import by.clevertec.newsproject.dto.response.NewsResponseDto;
 import by.clevertec.newsproject.entity.News;
-import by.clevertec.newsproject.dto.request.NewsRequestDto;
-import by.clevertec.newsproject.dto.response.CommentListResponseDto;
 import by.clevertec.newsproject.mapper.NewsMapper;
 import by.clevertec.newsproject.repository.NewsRepository;
 import by.clevertec.newsproject.service.NewsService;
@@ -89,7 +89,11 @@ public class NewsServiceImpl implements NewsService {
 
     @Transactional(readOnly = true)
     @Override
-    public ResponseEntity<CommentListResponseDto> getCommentsByNewsId(Long newsId, Pageable pageable) {
+    public CommentListResponseDto getCommentsByNewsId(Long newsId, Pageable pageable) {
+
+        newsRepository.findById(newsId).orElseThrow(() ->
+                        EntityNotFoundExceptionCustom.of(News.class, newsId));
+
         ResponseEntity<Page<CommentResponseDto>> response = commentClient.getCommentsByNewsId(newsId, pageable);
 
         if (!response.getStatusCode().equals(HttpStatus.OK) || response.getBody() == null) {
@@ -98,7 +102,7 @@ public class NewsServiceImpl implements NewsService {
 
         CommentListResponseDto commentListResponseDto = new CommentListResponseDto(response.getBody().getContent());
 
-        return ResponseEntity.ok(commentListResponseDto);
+        return commentListResponseDto;
     }
 
 }
