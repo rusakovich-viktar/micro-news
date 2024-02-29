@@ -50,7 +50,7 @@ class NewsTest {
 
         Thread.sleep(1000);
 
-        news.preUpdate(); 
+        news.preUpdate();
 
         LocalDateTime updateTime = news.getUpdateTime();
 

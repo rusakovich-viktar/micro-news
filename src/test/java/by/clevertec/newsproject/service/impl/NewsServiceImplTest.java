@@ -1,8 +1,11 @@
 package by.clevertec.newsproject.service.impl;
 
+import static by.clevertec.newsproject.util.TestConstant.ExceptionMessages.ERROR_RETRIEVING_COMMENTS_FOR_NEWS_ID;
 import static by.clevertec.newsproject.util.TestConstant.ExceptionMessages.POSTFIX_NOT_FOUND_CUSTOM_MESSAGE;
 import static by.clevertec.newsproject.util.TestConstant.ExceptionMessages.PREFIX_NOT_FOUND_CUSTOM_MESSAGE;
 import static by.clevertec.newsproject.util.TestConstant.ID_ONE;
+import static by.clevertec.newsproject.util.TestConstant.NEW_TEXT;
+import static by.clevertec.newsproject.util.TestConstant.NEW_TITLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -38,6 +41,7 @@ import org.springframework.http.ResponseEntity;
 
 @ExtendWith(MockitoExtension.class)
 class NewsServiceImplTest {
+
 
     @Mock
     private NewsRepository newsRepository;
@@ -143,8 +147,8 @@ class NewsServiceImplTest {
         void testUpdateNewsShouldReturnNewsResponseDto_whenCorrectNewsRequestDto() {
             // given
             NewsRequestDto newsRequestDto = DataTestBuilder.builder()
-                    .withTitle("new title")
-                    .withText("new text")
+                    .withTitle(NEW_TITLE)
+                    .withText(NEW_TEXT)
                     .build()
                     .buildNewsRequestDto();
 
@@ -335,7 +339,7 @@ class NewsServiceImplTest {
                     newsService.getCommentsByNewsId(ID_ONE, pageable));
 
             // then
-            assertEquals("Error retrieving comments for newsId: " + ID_ONE, exception.getMessage());
+            assertEquals(ERROR_RETRIEVING_COMMENTS_FOR_NEWS_ID + ID_ONE, exception.getMessage());
         }
     }
 }

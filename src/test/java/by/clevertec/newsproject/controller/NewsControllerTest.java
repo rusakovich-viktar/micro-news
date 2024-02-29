@@ -4,8 +4,16 @@ import static by.clevertec.newsproject.util.TestConstant.ExceptionMessages.POSTF
 import static by.clevertec.newsproject.util.TestConstant.ExceptionMessages.PREFIX_NOT_FOUND_CUSTOM_MESSAGE;
 import static by.clevertec.newsproject.util.TestConstant.ID_ONE;
 import static by.clevertec.newsproject.util.TestConstant.INVALID_ID;
+import static by.clevertec.newsproject.util.TestConstant.NEWS1;
+import static by.clevertec.newsproject.util.TestConstant.PAGE;
+import static by.clevertec.newsproject.util.TestConstant.PAGE_NUMBER;
+import static by.clevertec.newsproject.util.TestConstant.PAGE_SIZE;
+import static by.clevertec.newsproject.util.TestConstant.Path.COMMENTS;
 import static by.clevertec.newsproject.util.TestConstant.Path.NEWS;
 import static by.clevertec.newsproject.util.TestConstant.Path.NEWS_URL;
+import static by.clevertec.newsproject.util.TestConstant.SIZE;
+import static by.clevertec.newsproject.util.TestConstant.STRING_ONE;
+import static by.clevertec.newsproject.util.TestConstant.STRING_ONE_FIVE;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -59,6 +67,7 @@ class NewsControllerTest {
 
         @Test
         void getByIdShouldReturnNewsResponseDto() throws Exception {
+
             NewsResponseDto expected = DataTestBuilder.builder()
                     .build()
                     .buildNewsResponseDto();
@@ -78,7 +87,7 @@ class NewsControllerTest {
             Long invalidId = INVALID_ID;
             String url = NEWS_URL + invalidId;
             EntityNotFoundExceptionCustom exception = new EntityNotFoundExceptionCustom
-                    ("News" + PREFIX_NOT_FOUND_CUSTOM_MESSAGE + invalidId + POSTFIX_NOT_FOUND_CUSTOM_MESSAGE);
+                    (NEWS1 + PREFIX_NOT_FOUND_CUSTOM_MESSAGE + invalidId + POSTFIX_NOT_FOUND_CUSTOM_MESSAGE);
 
             when(newsService.getNewsById(invalidId))
                     .thenThrow(exception);
@@ -95,6 +104,7 @@ class NewsControllerTest {
 
         @Test
         void createNewsShouldReturnNewsResponseDto() throws Exception {
+
             NewsRequestDto newsRequestDto = DataTestBuilder.builder()
                     .build()
                     .buildNewsRequestDto();
@@ -113,7 +123,7 @@ class NewsControllerTest {
                     .andExpect(content().json(objectMapper.writeValueAsString(expected)));
 
             ArgumentCaptor<NewsRequestDto> captor = ArgumentCaptor.forClass(NewsRequestDto.class);
-            verify(newsService, times(1))
+            verify(newsService, times(PAGE_NUMBER))
                     .createNews(captor.capture());
 
             NewsRequestDto capturedDto = captor.getValue();
@@ -124,6 +134,7 @@ class NewsControllerTest {
 
         @Test
         void createNewsShouldReturnBadRequest_whenInvalidRequest() throws Exception {
+
             NewsRequestDto invalidNewsRequestDto = new NewsRequestDto();
 
             mockMvc.perform(post(NEWS_URL)
@@ -161,7 +172,7 @@ class NewsControllerTest {
                     .andExpect(content().json(objectMapper.writeValueAsString(expected)));
 
             ArgumentCaptor<NewsRequestDto> captor = ArgumentCaptor.forClass(NewsRequestDto.class);
-            verify(newsService, times(1))
+            verify(newsService, times(PAGE_NUMBER))
                     .updateNews(eq(ID_ONE), captor.capture());
 
             NewsRequestDto capturedDto = captor.getValue();
@@ -171,6 +182,7 @@ class NewsControllerTest {
 
         @Test
         void updateNewsShouldReturnBadRequest_whenInvalidRequest() throws Exception {
+
             NewsRequestDto invalidNewsRequestDto = new NewsRequestDto();
 
             mockMvc.perform(put(NEWS_URL + ID_ONE)
@@ -194,7 +206,7 @@ class NewsControllerTest {
             mockMvc.perform(delete(NEWS_URL + ID_ONE))
                     .andExpect(status().isNoContent());
 
-            verify(newsService, times(1))
+            verify(newsService, times(PAGE_NUMBER))
                     .deleteNews(ID_ONE);
         }
     }
@@ -204,8 +216,8 @@ class NewsControllerTest {
 
         @Test
         void getAllNewsShouldReturnListOfNews() throws Exception {
-            int pageNumber = 1;
-            int pageSize = 15;
+            int pageNumber = PAGE_NUMBER;
+            int pageSize = PAGE_SIZE;
             NewsResponseDto newsOne = DataTestBuilder.builder()
                     .build()
                     .buildNewsResponseDto();
@@ -219,8 +231,8 @@ class NewsControllerTest {
                     .thenReturn(new PageImpl<>(expectedNews));
 
             mockMvc.perform(get(NEWS)
-                            .param("page", String.valueOf(pageNumber))
-                            .param("size", String.valueOf(pageSize)))
+                            .param(PAGE, String.valueOf(pageNumber))
+                            .param(SIZE, String.valueOf(pageSize)))
                     .andExpect(status().isOk())
                     .andExpect(content().json(objectMapper.writeValueAsString(new PageImpl<>(expectedNews))))
                     .andExpect(jsonPath("$.content", hasSize(expectedNews.size())))
@@ -231,7 +243,7 @@ class NewsControllerTest {
                     .andExpect(jsonPath("$.content[1].title", is(newsTwo.getTitle())))
                     .andExpect(jsonPath("$.content[1].text", is(newsTwo.getText())));
 
-            verify(newsService, times(1))
+            verify(newsService, times(PAGE_NUMBER))
                     .getAllNews(PageRequest.of(pageNumber, pageSize));
         }
     }
@@ -241,9 +253,10 @@ class NewsControllerTest {
 
         @Test
         void getCommentsByNewsIdShouldReturnCommentListResponseDto() throws Exception {
+
             Long newsId = 1L;
-            int pageNumber = 1;
-            int pageSize = 15;
+            int pageNumber = PAGE_NUMBER;
+            int pageSize = PAGE_SIZE;
 
             CommentResponseDto commentOne = DataTestBuilder.builder()
                     .build()
@@ -259,13 +272,13 @@ class NewsControllerTest {
             when(newsService.getCommentsByNewsId(newsId, PageRequest.of(pageNumber, pageSize)))
                     .thenReturn(expected);
 
-            mockMvc.perform(get(NEWS_URL + newsId + "/comments")
-                            .param("page", String.valueOf(pageNumber))
-                            .param("size", String.valueOf(pageSize)))
+            mockMvc.perform(get(NEWS_URL + newsId + COMMENTS)
+                            .param(PAGE, String.valueOf(pageNumber))
+                            .param(SIZE, String.valueOf(pageSize)))
                     .andExpect(status().isOk())
                     .andExpect(content().json(objectMapper.writeValueAsString(expected)));
 
-            verify(newsService, times(1))
+            verify(newsService, times(PAGE_NUMBER))
                     .getCommentsByNewsId(newsId, PageRequest.of(pageNumber, pageSize));
         }
 
@@ -273,14 +286,14 @@ class NewsControllerTest {
         void getCommentsByNewsIdShouldReturnNotFound_whenInvalidNewsId() throws Exception {
             Long invalidNewsId = INVALID_ID;
 
-            when(newsService.getCommentsByNewsId(invalidNewsId, PageRequest.of(1, 15)))
+            when(newsService.getCommentsByNewsId(invalidNewsId, PageRequest.of(PAGE_NUMBER, PAGE_SIZE)))
                     .thenThrow(new EntityNotFoundExceptionCustom
-                            ("News" + PREFIX_NOT_FOUND_CUSTOM_MESSAGE + invalidNewsId +
+                            (NEWS1 + PREFIX_NOT_FOUND_CUSTOM_MESSAGE + invalidNewsId +
                                     POSTFIX_NOT_FOUND_CUSTOM_MESSAGE));
 
-            mockMvc.perform(get(NEWS_URL + invalidNewsId + "/comments")
-                            .param("page", "1")
-                            .param("size", "15"))
+            mockMvc.perform(get(NEWS_URL + invalidNewsId + COMMENTS)
+                            .param(PAGE, STRING_ONE)
+                            .param(SIZE, STRING_ONE_FIVE))
                     .andExpect(status().isNotFound());
         }
     }
