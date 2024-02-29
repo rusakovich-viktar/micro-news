@@ -8,7 +8,7 @@ import by.clevertec.newsproject.dto.response.NewsResponseDto;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.StampedLock;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Around;
@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
  * <p>
  * Каждый из этих методов записывает информацию в журнал и обновляет кэш соответствующим образом.
  */
-@Log4j2
+@Slf4j
 @Aspect
 @RequiredArgsConstructor
 @Component
@@ -69,11 +69,11 @@ public class NewsProxy {
         }
 
         if (newsResponseDto != null) {
-            log.info("News with id {} was retrieved from cache", id);
+            log.debug("News with id {} was retrieved from cache", id);
             return newsResponseDto;
         }
 
-        log.info("News with id {} was not found in cache, retrieving from database", id);
+        log.debug("News with id {} was not found in cache, retrieving from database", id);
         Object result = joinPoint.proceed();
         if (result instanceof NewsResponseDto newsDto) {
             userCache.get().put(id, result);
@@ -87,7 +87,7 @@ public class NewsProxy {
             "execution(* by.clevertec.newsproject.service.NewsService.createNews(..))", returning = "response")
     public void createNews(NewsResponseDto response) {
         userCache.get().put(response.getId(), response);
-        log.info("News with id {} was added to cache", response.getId());
+        log.debug("News with id {} was added to cache", response.getId());
 
     }
 
@@ -97,7 +97,7 @@ public class NewsProxy {
             argNames = "id")
     public void deleteNews(Long id) {
         userCache.get().remove(id);
-        log.info("News with id {} was removed from cache", id);
+        log.debug("News with id {} was removed from cache", id);
 
     }
 
@@ -106,7 +106,7 @@ public class NewsProxy {
             argNames = "id,retVal", returning = "retVal")
     public void updateNews(Long id, NewsResponseDto retVal) {
         userCache.get().put(id, retVal);
-        log.info("News with id {} was updated in cache", id);
+        log.debug("News with id {} was updated in cache", id);
 
 
     }
