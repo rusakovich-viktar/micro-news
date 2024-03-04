@@ -3,7 +3,6 @@ package by.clevertec.newsproject.config;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +34,7 @@ public class OpenApiConfig {
         contact.url("https://github.com/rusakovich-viktar/news-management-system");
 
         Info info = new Info()
-                .title("News system management API")
+                .title("News-part API")
                 .version("1.0")
                 .contact(contact);
 

@@ -29,7 +29,4 @@ micro-news:
     dev-url: http://localhost:8081
     prod-url: micro-news:8081
 
-springdoc:
-  swagger-ui:
-    url: /swagger.yaml
 

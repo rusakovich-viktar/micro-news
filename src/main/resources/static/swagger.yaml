@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: News system management API
+  title: News-part API
   version: 1.0.0
 paths:
   /news:
