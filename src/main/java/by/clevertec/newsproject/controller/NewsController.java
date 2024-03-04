@@ -5,6 +5,7 @@ import by.clevertec.newsproject.dto.response.CommentListResponseDto;
 import by.clevertec.newsproject.dto.response.NewsResponseDto;
 import by.clevertec.newsproject.service.NewsService;
 import by.clevertec.newsproject.util.Constant.BaseApi;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

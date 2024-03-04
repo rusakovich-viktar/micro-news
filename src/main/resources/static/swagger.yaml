@@ -1,0 +1,269 @@
+openapi: 3.0.0
+info:
+  title: News system management API
+  version: 1.0.0
+paths:
+  /news:
+    post:
+      summary: Create news
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsRequestDto'
+            examples:
+              example1:
+                value:
+                  title: "Example News Title"
+                  text: "Example News Text"
+      responses:
+        '201':
+          description: News successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsResponseDto'
+              examples:
+                example1:
+                  value:
+                    id: 1
+                    time: "2024-03-04T20:15:41.3008788"
+                    updateTime: "2024-03-04T20:15:41.3008788"
+                    title: "Example News Title"
+                    text: "Example News Text"
+
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+                    format: date-time
+                  status:
+                    type: integer
+                  error:
+                    type: string
+                  message:
+                    type: string
+              examples:
+                missingTitle:
+                  value:
+                    timestamp: "2024-03-04T21:43:31.6160715"
+                    status: 400
+                    error: "Validation error"
+                    message: "Error in field 'title': Title cannot be blank"
+                missingText:
+                  value:
+                    timestamp: "2024-03-04T21:44:29.7909011"
+                    status: 400
+                    error: "Validation error"
+                    message: "Error in field 'text': Text cannot be blank"
+    get:
+      summary: Get all news
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          description: Number of items per page for pagination
+          required: false
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: A list of news
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NewsResponseDto'
+  /news/{id}:
+    get:
+      summary: Get news by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: News details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsResponseDto'
+        '404':
+          description: News not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+    put:
+      summary: Update news
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsRequestDto'
+      responses:
+        '200':
+          description: News successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsResponseDto'
+        '404':
+          description: News not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+    delete:
+      summary: Delete news
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: News successfully deleted
+        '404':
+          description: News not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+  /news/{newsId}/comments:
+    get:
+      summary: Get comments by news ID
+      parameters:
+        - name: newsId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          description: Number of items per page for pagination
+          required: false
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: A list of comments
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  comments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CommentResponseDto'
+        '404':
+          description: News not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDto'
+
+components:
+  schemas:
+    NewsRequestDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Example News Title"
+        text:
+          type: string
+          example: "Example News Text"
+    NewsResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        time:
+          type: string
+          format: date-time
+          example: "2024-03-04T20:15:41.3008788"
+        updateTime:
+          type: string
+          format: date-time
+          example: "2024-03-04T20:15:41.3008788"
+        title:
+          type: string
+          example: "Example News Title"
+        text:
+          type: string
+          example: "Example News Text"
+    CommentResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 101
+        time:
+          type: string
+          format: date-time
+          example: "2024-02-29T17:34:51.185191"
+        updateTime:
+          type: string
+          format: date-time
+          example: "2024-02-29T17:34:51.185191"
+        text:
+          type: string
+          example: "very well"
+        username:
+          type: string
+          example: "user1"
+        newsId:
+          type: integer
+          example: 11
+    ErrorDto:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          example: "2024-03-04T21:50:11.8911256"
+        status:
+          type: integer
+          example: 404
+        error:
+          type: string
+          example: "Not Found"
+        message:
+          type: string
+          example: "News with id 111 does not exist"
