@@ -76,7 +76,6 @@ class NewsMapperTest {
         assertNull(actual);
     }
 
-
     @Test
     void testUpdateFromDtoToEntity() {
         // given

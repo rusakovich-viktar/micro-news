@@ -55,7 +55,6 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(NewsController.class)
 class NewsControllerTest {
 
-
     private final MockMvc mockMvc;
     private final ObjectMapper objectMapper;
 
@@ -87,7 +86,8 @@ class NewsControllerTest {
             Long invalidId = INVALID_ID;
             String url = NEWS_URL + invalidId;
             EntityNotFoundExceptionCustom exception = new EntityNotFoundExceptionCustom
-                    (NEWS1 + PREFIX_NOT_FOUND_CUSTOM_MESSAGE + invalidId + POSTFIX_NOT_FOUND_CUSTOM_MESSAGE);
+                    (NEWS1 + PREFIX_NOT_FOUND_CUSTOM_MESSAGE + invalidId
+                            + POSTFIX_NOT_FOUND_CUSTOM_MESSAGE);
 
             when(newsService.getNewsById(invalidId))
                     .thenThrow(exception);
@@ -147,7 +147,6 @@ class NewsControllerTest {
         }
     }
 
-
     @Nested
     class TestUpdateNews {
 
@@ -201,7 +200,6 @@ class NewsControllerTest {
 
         @Test
         void deleteNewsShouldReturnNoContent() throws Exception {
-
 
             mockMvc.perform(delete(NEWS_URL + ID_ONE))
                     .andExpect(status().isNoContent());
@@ -288,8 +286,8 @@ class NewsControllerTest {
 
             when(newsService.getCommentsByNewsId(invalidNewsId, PageRequest.of(PAGE_NUMBER, PAGE_SIZE)))
                     .thenThrow(new EntityNotFoundExceptionCustom
-                            (NEWS1 + PREFIX_NOT_FOUND_CUSTOM_MESSAGE + invalidNewsId +
-                                    POSTFIX_NOT_FOUND_CUSTOM_MESSAGE));
+                            (NEWS1 + PREFIX_NOT_FOUND_CUSTOM_MESSAGE + invalidNewsId
+                                    + POSTFIX_NOT_FOUND_CUSTOM_MESSAGE));
 
             mockMvc.perform(get(NEWS_URL + invalidNewsId + COMMENTS)
                             .param(PAGE, STRING_ONE)

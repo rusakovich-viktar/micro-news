@@ -4,6 +4,7 @@ import by.clevertec.newsproject.dto.request.NewsRequestDto;
 import by.clevertec.newsproject.dto.response.CommentListResponseDto;
 import by.clevertec.newsproject.dto.response.NewsResponseDto;
 import by.clevertec.newsproject.service.NewsService;
+import by.clevertec.newsproject.util.Constant.BaseApi;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,12 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/news")
+@RequestMapping(BaseApi.NEWS)
 @RequiredArgsConstructor
 public class NewsController {
 
     private final NewsService newsService;
-
 
     @PostMapping
     public ResponseEntity<NewsResponseDto> createNews(@Valid @RequestBody NewsRequestDto newsRequestDto) {
@@ -34,20 +34,19 @@ public class NewsController {
                 HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(BaseApi.ID)
     public ResponseEntity<NewsResponseDto> getNewsById(@PathVariable Long id) {
         NewsResponseDto newsById = newsService.getNewsById(id);
         return ResponseEntity.ok(newsById);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(BaseApi.ID)
     public ResponseEntity<NewsResponseDto> updateNews(@PathVariable Long id,
                                                       @Valid @RequestBody NewsRequestDto newsRequestDto) {
         return ResponseEntity.ok(newsService.updateNews(id, newsRequestDto));
     }
 
-
-    @DeleteMapping("/{id}")
+    @DeleteMapping(BaseApi.ID)
     public ResponseEntity<Void> deleteNews(@PathVariable Long id) {
         newsService.deleteNews(id);
         return ResponseEntity.noContent().build();
@@ -58,11 +57,10 @@ public class NewsController {
         return ResponseEntity.ok(newsService.getAllNews(pageable));
     }
 
-    @GetMapping("/{newsId}/comments")
+    @GetMapping(BaseApi.NEWS_ID_COMMENTS)
     public ResponseEntity<CommentListResponseDto> getCommentsByNewsId(@PathVariable Long newsId,
                                                                       Pageable pageable) {
         return ResponseEntity.ok(newsService.getCommentsByNewsId(newsId, pageable));
-
 
     }
 

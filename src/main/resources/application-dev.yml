@@ -7,16 +7,11 @@ spring:
   liquibase:
     contexts: prod
 
-  jpa:
-    properties:
-      hibernate:
-        search:
-          backend:
-            type: elasticsearch
-            hosts: localhost:9200
-
-
 cache:
   algorithm: LFU
   capacity: 50
+
+comments-service:
+  url:
+    http://localhost:8082
 

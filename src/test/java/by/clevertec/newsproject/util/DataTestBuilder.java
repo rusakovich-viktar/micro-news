@@ -53,7 +53,6 @@ public class DataTestBuilder {
         return news;
     }
 
-
     public CommentResponseDto buildCommentResponseDto() {
         CommentResponseDto buildCommentResponseDto = new CommentResponseDto();
 
@@ -79,7 +78,6 @@ public class DataTestBuilder {
         return buildNewsResponseDto;
     }
 
-
     public NewsRequestDto buildNewsRequestDto() {
         NewsRequestDto buildNewsRequestDto = new NewsRequestDto();
 
@@ -88,6 +86,5 @@ public class DataTestBuilder {
 
         return buildNewsRequestDto;
     }
-
 
 }
