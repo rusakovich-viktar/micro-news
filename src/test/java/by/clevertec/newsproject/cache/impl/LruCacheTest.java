@@ -8,7 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("test")
 class LruCacheTest {
 
     private LruCache<String, Integer> cache;

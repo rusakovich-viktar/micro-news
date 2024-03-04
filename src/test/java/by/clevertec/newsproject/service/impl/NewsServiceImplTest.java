@@ -42,7 +42,6 @@ import org.springframework.http.ResponseEntity;
 @ExtendWith(MockitoExtension.class)
 class NewsServiceImplTest {
 
-
     @Mock
     private NewsRepository newsRepository;
 
@@ -151,7 +150,6 @@ class NewsServiceImplTest {
                     .withText(NEW_TEXT)
                     .build()
                     .buildNewsRequestDto();
-
 
             when(newsRepository.findById(ID_ONE)).thenReturn(Optional.of(news));
             doAnswer(invocation -> {

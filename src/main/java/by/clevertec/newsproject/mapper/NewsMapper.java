@@ -1,8 +1,8 @@
 package by.clevertec.newsproject.mapper;
 
+import by.clevertec.newsproject.dto.request.NewsRequestDto;
 import by.clevertec.newsproject.dto.response.NewsResponseDto;
 import by.clevertec.newsproject.entity.News;
-import by.clevertec.newsproject.dto.request.NewsRequestDto;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -11,7 +11,8 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface NewsMapper {
 
     NewsResponseDto toDto(News entity);

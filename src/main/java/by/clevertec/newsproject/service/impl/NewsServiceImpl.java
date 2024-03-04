@@ -1,5 +1,7 @@
 package by.clevertec.newsproject.service.impl;
 
+import static by.clevertec.newsproject.util.Constant.Atrubutes.NEWS;
+
 import by.clevertec.exception.EntityNotFoundExceptionCustom;
 import by.clevertec.newsproject.client.CommentClient;
 import by.clevertec.newsproject.dto.request.NewsRequestDto;
@@ -10,8 +12,8 @@ import by.clevertec.newsproject.entity.News;
 import by.clevertec.newsproject.mapper.NewsMapper;
 import by.clevertec.newsproject.repository.NewsRepository;
 import by.clevertec.newsproject.service.NewsService;
+import by.clevertec.newsproject.util.Constant.Messages;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -37,7 +39,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     @Transactional
-    @CachePut(value = "news", key = "#result.id")
+    @CachePut(value = NEWS, key = "#result.id")
     public NewsResponseDto createNews(NewsRequestDto newsRequestDto) {
         News news = newsMapper.toEntity(newsRequestDto);
         News savedNews = newsRepository.save(news);
@@ -46,7 +48,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Transactional(readOnly = true)
     @Override
-    @Cacheable(value = "news")
+    @Cacheable(value = NEWS)
     public NewsResponseDto getNewsById(Long id) {
         News news = newsRepository
                 .findById(id)
@@ -58,7 +60,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     @Transactional
-    @CachePut(value = "news", key = "#id")
+    @CachePut(value = NEWS, key = "#id")
     public NewsResponseDto updateNews(Long id, NewsRequestDto newsRequestDto) {
         News news = newsRepository.findById(id)
                 .orElseThrow(() -> EntityNotFoundExceptionCustom.of(News.class, id));
@@ -67,7 +69,7 @@ public class NewsServiceImpl implements NewsService {
         return newsMapper.toDto(updatedNews);
     }
 
-    @CacheEvict(value = "news", key = "#id")
+    @CacheEvict(value = NEWS, key = "#id")
     @Override
     @Transactional
     public void deleteNews(Long id) {
@@ -87,23 +89,20 @@ public class NewsServiceImpl implements NewsService {
                 .map(newsMapper::toDto);
     }
 
-
     @Transactional(readOnly = true)
     @Override
     public CommentListResponseDto getCommentsByNewsId(Long newsId, Pageable pageable) {
 
         newsRepository.findById(newsId).orElseThrow(() ->
-                        EntityNotFoundExceptionCustom.of(News.class, newsId));
+                EntityNotFoundExceptionCustom.of(News.class, newsId));
 
         ResponseEntity<Page<CommentResponseDto>> response = commentClient.getCommentsByNewsId(newsId, pageable);
 
         if (!response.getStatusCode().equals(HttpStatus.OK) || response.getBody() == null) {
-            throw new RuntimeException("Error retrieving comments for newsId: " + newsId);
+            throw new RuntimeException(Messages.ERROR_RETRIEVING_COMMENTS_FOR_NEWS_ID + newsId);
         }
 
-        CommentListResponseDto commentListResponseDto = new CommentListResponseDto(response.getBody().getContent());
-
-        return commentListResponseDto;
+        return new CommentListResponseDto(response.getBody().getContent());
     }
 
 }

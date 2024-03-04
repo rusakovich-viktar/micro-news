@@ -6,16 +6,11 @@ spring:
 
   liquibase:
     contexts: prod
-  jpa:
-    open-in-view: false
-    properties:
-      hibernate:
-        search:
-          backend:
-            type: elasticsearch
-            hosts: elasticsearch:9200
 
   data:
     redis:
       host: redis
 
+comments-service:
+  url:
+    micro-comments:8082

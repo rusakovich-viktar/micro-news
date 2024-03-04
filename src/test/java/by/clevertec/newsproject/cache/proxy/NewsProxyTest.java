@@ -25,7 +25,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
+@ActiveProfiles("dev")
 @SpringBootTest
 @RequiredArgsConstructor
 class NewsProxyTest {
@@ -43,9 +45,7 @@ class NewsProxyTest {
 
     @MockBean
     private ProceedingJoinPoint proceedingJoinPoint;
-
     private final StampedLock lock = new StampedLock();
-
 
     @Nested
     class TestGetNews {
@@ -76,7 +76,6 @@ class NewsProxyTest {
             verify(proceedingJoinPoint, times(0)).proceed();
         }
 
-
         @Test
         void testGetNewsReturnNewsFromCache_whenOptimisticLockInvalidated() throws Throwable {
             NewsResponseDto newsResponseDto = DataTestBuilder.builder()
@@ -90,7 +89,6 @@ class NewsProxyTest {
 
             newsProxy.createNews(newsResponseDto);
 
-            // Invalidate the optimistic lock
             lock.writeLock();
 
             Object result = newsProxy.getNews(proceedingJoinPoint);
@@ -178,6 +176,5 @@ class NewsProxyTest {
 
         assertEquals(expected, userCache.get(news.getId()));
     }
-
 
 }

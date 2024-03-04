@@ -13,11 +13,9 @@ import jakarta.persistence.Transient;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
 @Entity

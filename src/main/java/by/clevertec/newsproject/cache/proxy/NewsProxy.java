@@ -1,10 +1,10 @@
 package by.clevertec.newsproject.cache.proxy;
 
-
 import by.clevertec.newsproject.cache.Cache;
 import by.clevertec.newsproject.cache.impl.LfuCache;
 import by.clevertec.newsproject.cache.impl.LruCache;
 import by.clevertec.newsproject.dto.response.NewsResponseDto;
+import by.clevertec.newsproject.util.Constant.Messages;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.StampedLock;
 import lombok.RequiredArgsConstructor;
@@ -17,18 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-/**
- * Класс {@code UserProxy} представляет собой прокси для работы с пользователями.
- * Он использует аспектно-ориентированное программирование (AOP) для кэширования пользователей.
- * <p>
- * Этот класс использует {@code Cache<Integer, User>} для хранения пользователей, где ключом является идентификатор пользователя.
- * Кэш настраивается с помощью метода {@code configureCache()}, который читает конфигурацию из файла YAML.
- * <p>
- * Методы {@code getUser()}, {@code createUser()}, {@code deleteUser()} и {@code updateUser()} объявлены как точки среза (pointcuts) для AOP.
- * Они используются в аннотациях {@code Around} и {@code AfterReturning} для выполнения действий перед, после или вместо вызова соответствующих методов сервиса.
- * <p>
- * Каждый из этих методов записывает информацию в журнал и обновляет кэш соответствующим образом.
- */
 @Slf4j
 @Aspect
 @RequiredArgsConstructor
@@ -45,10 +33,9 @@ public class NewsProxy {
     private final AtomicReference<Cache<Long, Object>> userCache = new AtomicReference<>(createCache());
     private final StampedLock lock = new StampedLock();
 
-
     @SuppressWarnings("checkstyle:IllegalCatch")
-    @Around("@annotation(org.springframework.cache.annotation.Cacheable) " +
-            "&& execution(* by.clevertec.newsproject.service.NewsService.getNewsById(..))")
+    @Around("@annotation(org.springframework.cache.annotation.Cacheable) "
+            + "&& execution(* by.clevertec.newsproject.service.NewsService.getNewsById(..))")
     public Object getNews(ProceedingJoinPoint joinPoint) throws Throwable {
         Object[] args = joinPoint.getArgs();
         Long id = (Long) args[0];
@@ -69,11 +56,11 @@ public class NewsProxy {
         }
 
         if (newsResponseDto != null) {
-            log.debug("News with id {} was retrieved from cache", id);
+            log.debug(Messages.NEWS_WITH_ID_WAS_RETRIEVED_FROM_CACHE, id);
             return newsResponseDto;
         }
 
-        log.debug("News with id {} was not found in cache, retrieving from database", id);
+        log.debug(Messages.NEWS_WITH_ID_WAS_NOT_FOUND_IN_CACHE_RETRIEVING_FROM_DATABASE, id);
         Object result = joinPoint.proceed();
         if (result instanceof NewsResponseDto newsDto) {
             userCache.get().put(id, result);
@@ -82,32 +69,29 @@ public class NewsProxy {
         return result;
     }
 
-
-    @AfterReturning(pointcut = "@annotation(org.springframework.cache.annotation.CachePut) && " +
-            "execution(* by.clevertec.newsproject.service.NewsService.createNews(..))", returning = "response")
+    @AfterReturning(pointcut = "@annotation(org.springframework.cache.annotation.CachePut) && "
+            + "execution(* by.clevertec.newsproject.service.NewsService.createNews(..))", returning = "response")
     public void createNews(NewsResponseDto response) {
         userCache.get().put(response.getId(), response);
-        log.debug("News with id {} was added to cache", response.getId());
+        log.debug(Messages.NEWS_WITH_ID_WAS_ADDED_TO_CACHE, response.getId());
 
     }
 
-
-    @AfterReturning(pointcut = "@annotation(org.springframework.cache.annotation.CacheEvict) " +
-            "&& execution(* by.clevertec.newsproject.service.NewsService.deleteNews(Long)) && args(id)",
+    @AfterReturning(pointcut = "@annotation(org.springframework.cache.annotation.CacheEvict) "
+            + "&& execution(* by.clevertec.newsproject.service.NewsService.deleteNews(Long)) && args(id)",
             argNames = "id")
     public void deleteNews(Long id) {
         userCache.get().remove(id);
-        log.debug("News with id {} was removed from cache", id);
+        log.debug(Messages.NEWS_WITH_ID_WAS_REMOVED_FROM_CACHE, id);
 
     }
 
-    @AfterReturning(pointcut = "@annotation(org.springframework.cache.annotation.CachePut) &&" +
-            " execution(* by.clevertec.newsproject.service.NewsService.updateNews(Long, ..)) && args(id, ..)",
+    @AfterReturning(pointcut = "@annotation(org.springframework.cache.annotation.CachePut) &&"
+            + " execution(* by.clevertec.newsproject.service.NewsService.updateNews(Long, ..)) && args(id, ..)",
             argNames = "id,retVal", returning = "retVal")
     public void updateNews(Long id, NewsResponseDto retVal) {
         userCache.get().put(id, retVal);
-        log.debug("News with id {} was updated in cache", id);
-
+        log.debug(Messages.NEWS_WITH_ID_WAS_UPDATED_IN_CACHE, id);
 
     }
 
