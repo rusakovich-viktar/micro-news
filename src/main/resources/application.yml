@@ -1,32 +1,22 @@
 spring:
-  profiles:
-    default: dev
-
-  #    active: prod
-
   application:
     name: micro-news
-  jpa:
-    properties:
-      hibernate:
-        show-sql: true
-        format_sql: true
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: none
+  cloud:
+    config:
+      fail-fast: true
 
+  profiles:
+    active: dev
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+    import: optional:configserver:http://localhost:8888
 
-  liquibase:
-    enabled: true
-    change-log: classpath:db/changelog/db.changelog-master.yaml
-    contexts: prod
-
-server:
-  port: 8081
-
-micro-news:
-  openapi:
-    dev-url: http://localhost:8081
-    prod-url: micro-news:8081
-
-
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+    import: optional:configserver:http://cloud-config-server:8888
