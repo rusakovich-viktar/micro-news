@@ -6,7 +6,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableFeignClients
-//@EnableAspectJAutoProxy
 public class NewsProjectApplication {
 
     public static void main(String[] args) {
