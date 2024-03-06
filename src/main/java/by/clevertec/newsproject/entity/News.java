@@ -18,19 +18,33 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 
+/**
+ * Сущность новости.
+ */
 @Entity
 @Getter
 @Setter
-@Table(name = "news")
 @NoArgsConstructor
 @FieldNameConstants
+@Table(name = "news")
 public class News implements Serializable {
 
+    /**
+     * Идентификатор новости.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /**
+     * Время создания новости.
+     */
     @Column(nullable = false)
     private LocalDateTime time;
+
+    /**
+     * Время последнего обновления новости.
+     */
     @Column(nullable = false)
     private LocalDateTime updateTime;
 
@@ -40,9 +54,16 @@ public class News implements Serializable {
     @Column(nullable = false)
     private String text;
 
+    /**
+     * Список комментариев к новости (временное поле, не сохраняется в базе данных).
+     */
     @Transient
     private List<CommentResponseDto> comments;
 
+    /**
+     * Метод, вызываемый перед сохранением новости.
+     * Устанавливает время создания и обновления новости, если они не заданы.
+     */
     @PrePersist
     public void prePersist() {
         if (this.time == null) {
@@ -52,9 +73,12 @@ public class News implements Serializable {
         }
     }
 
+    /**
+     * Метод, вызываемый перед обновлением новости.
+     * Устанавливает время обновления новости.
+     */
     @PreUpdate
     public void preUpdate() {
         this.updateTime = LocalDateTime.now();
     }
 }
-

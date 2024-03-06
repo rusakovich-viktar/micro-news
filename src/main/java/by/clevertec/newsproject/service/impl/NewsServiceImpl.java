@@ -26,17 +26,26 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Реализация сервиса для управления новостями.
+ */
 @Slf4j
 @Service
-@RequiredArgsConstructor
 @Transactional
 @EnableCaching
+@RequiredArgsConstructor
 public class NewsServiceImpl implements NewsService {
 
     private final NewsRepository newsRepository;
     private final NewsMapper newsMapper;
     private final CommentClient commentClient;
 
+    /**
+     * Создает новость.
+     *
+     * @param newsRequestDto Запрос на создание новости.
+     * @return Ответ с созданной новостью.
+     */
     @Override
     @Transactional
     @CachePut(value = NEWS, key = "#result.id")
@@ -46,9 +55,15 @@ public class NewsServiceImpl implements NewsService {
         return newsMapper.toDto(savedNews);
     }
 
-    @Transactional(readOnly = true)
+    /**
+     * Получает новость по идентификатору.
+     *
+     * @param id Идентификатор новости.
+     * @return Ответ с найденной новостью.
+     */
     @Override
     @Cacheable(value = NEWS)
+    @Transactional(readOnly = true)
     public NewsResponseDto getNewsById(Long id) {
         News news = newsRepository
                 .findById(id)
@@ -58,6 +73,13 @@ public class NewsServiceImpl implements NewsService {
         return newsMapper.toDto(news);
     }
 
+    /**
+     * Обновляет новость по идентификатору.
+     *
+     * @param id             Идентификатор новости.
+     * @param newsRequestDto Запрос на обновление новости.
+     * @return Ответ с обновленной новостью.
+     */
     @Override
     @Transactional
     @CachePut(value = NEWS, key = "#id")
@@ -69,9 +91,14 @@ public class NewsServiceImpl implements NewsService {
         return newsMapper.toDto(updatedNews);
     }
 
-    @CacheEvict(value = NEWS, key = "#id")
+    /**
+     * Удаляет новость по идентификатору.
+     *
+     * @param id Идентификатор новости.
+     */
     @Override
     @Transactional
+    @CacheEvict(value = NEWS, key = "#id")
     public void deleteNews(Long id) {
 
         News news = newsRepository.findById(id)
@@ -82,15 +109,28 @@ public class NewsServiceImpl implements NewsService {
         newsRepository.delete(news);
     }
 
-    @Transactional(readOnly = true)
+    /**
+     * Получает все новости с пагинацией.
+     *
+     * @param pageable Параметры пагинации.
+     * @return Ответ со списком новостей.
+     */
     @Override
+    @Transactional(readOnly = true)
     public Page<NewsResponseDto> getAllNews(Pageable pageable) {
         return newsRepository.findAll(pageable)
                 .map(newsMapper::toDto);
     }
 
-    @Transactional(readOnly = true)
+    /**
+     * Получает комментарии к новости по идентификатору новости с пагинацией.
+     *
+     * @param newsId   Идентификатор новости.
+     * @param pageable Параметры пагинации.
+     * @return Ответ со списком комментариев.
+     */
     @Override
+    @Transactional(readOnly = true)
     public CommentListResponseDto getCommentsByNewsId(Long newsId, Pageable pageable) {
 
         newsRepository.findById(newsId).orElseThrow(() ->

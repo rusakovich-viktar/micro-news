@@ -17,7 +17,6 @@
                    (NOW(), NOW(), 'новокаша', 'текстовыделитель')
             RETURNING id;
 
-
             INSERT INTO comments (time, update_time, text, username, news_id)
             VALUES (NOW(), NOW(), 'Комментарий 1', 'Пользователь 1', 1),
                    (NOW(), NOW(), 'Комментарий 2', 'Пользователь 2', 1),
