@@ -17,11 +17,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+/**
+ * Прокси-класс для управления кэшем новостей.
+ */
 @Slf4j
 @Aspect
-@RequiredArgsConstructor
 @Component
 @Profile("dev")
+@RequiredArgsConstructor
 public class NewsProxy {
 
     @Value("${cache.algorithm}")
@@ -33,6 +36,13 @@ public class NewsProxy {
     private final AtomicReference<Cache<Long, Object>> userCache = new AtomicReference<>(createCache());
     private final StampedLock lock = new StampedLock();
 
+    /**
+     * Получает новости из кэша или из базы данных, если в кэше их нет.
+     *
+     * @param joinPoint точка присоединения
+     * @return объект новостей
+     * @throws Throwable в случае ошибки
+     */
     @SuppressWarnings("checkstyle:IllegalCatch")
     @Around("@annotation(org.springframework.cache.annotation.Cacheable) "
             + "&& execution(* by.clevertec.newsproject.service.NewsService.getNewsById(..))")
@@ -69,6 +79,11 @@ public class NewsProxy {
         return result;
     }
 
+    /**
+     * Добавляет новые новости в кэш после их создания.
+     *
+     * @param response объект новостей
+     */
     @AfterReturning(pointcut = "@annotation(org.springframework.cache.annotation.CachePut) && "
             + "execution(* by.clevertec.newsproject.service.NewsService.createNews(..))", returning = "response")
     public void createNews(NewsResponseDto response) {
@@ -77,6 +92,11 @@ public class NewsProxy {
 
     }
 
+    /**
+     * Удаляет новости из кэша после их удаления.
+     *
+     * @param id идентификатор новостей
+     */
     @AfterReturning(pointcut = "@annotation(org.springframework.cache.annotation.CacheEvict) "
             + "&& execution(* by.clevertec.newsproject.service.NewsService.deleteNews(Long)) && args(id)",
             argNames = "id")
@@ -86,6 +106,12 @@ public class NewsProxy {
 
     }
 
+    /**
+     * Обновляет новости в кэше после их обновления.
+     *
+     * @param id     идентификатор новостей
+     * @param retVal объект новостей
+     */
     @AfterReturning(pointcut = "@annotation(org.springframework.cache.annotation.CachePut) &&"
             + " execution(* by.clevertec.newsproject.service.NewsService.updateNews(Long, ..)) && args(id, ..)",
             argNames = "id,retVal", returning = "retVal")
@@ -95,6 +121,11 @@ public class NewsProxy {
 
     }
 
+    /**
+     * Создает кэш.
+     *
+     * @return объект кэша
+     */
     private Cache<Long, Object> createCache() {
         if (maxCapacity == null) {
             maxCapacity = 50;

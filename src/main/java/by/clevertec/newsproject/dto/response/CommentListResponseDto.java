@@ -8,11 +8,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Класс для передачи данных о списке комментариев.
+ */
 @Getter
 @Setter
-@AllArgsConstructor
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class CommentListResponseDto implements Serializable {
 
     private List<CommentResponseDto> comments;

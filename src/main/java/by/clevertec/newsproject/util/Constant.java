@@ -2,9 +2,15 @@ package by.clevertec.newsproject.util;
 
 import lombok.experimental.UtilityClass;
 
+/**
+ * Утилитарный класс для хранения констант.
+ */
 @UtilityClass
 public class Constant {
 
+    /**
+     * Константы для API новостей.
+     */
     @UtilityClass
     public class BaseApi {
 
@@ -15,6 +21,9 @@ public class Constant {
 
     }
 
+    /**
+     * Константы для сообщений.
+     */
     @UtilityClass
     public class Messages {
 
@@ -28,6 +37,9 @@ public class Constant {
         public static final String ERROR_RETRIEVING_COMMENTS_FOR_NEWS_ID = "Error retrieving comments for newsId: ";
     }
 
+    /**
+     * Константы для атрибутов.
+     */
     @UtilityClass
     public class Atrubutes {
 

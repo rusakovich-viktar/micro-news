@@ -9,12 +9,15 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 
+/**
+ * Класс для передачи данных (ответа) о новости.
+ */
 @Getter
 @Setter
+@ToString
+@EqualsAndHashCode
 @NoArgsConstructor
 @FieldNameConstants
-@EqualsAndHashCode
-@ToString
 public class NewsResponseDto implements Serializable {
 
     private Long id;
