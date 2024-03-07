@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: micro-news
+  cloud:
+    config:
+      fail-fast: true
+
+  profiles:
+    active: prod
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+    import: optional:configserver:http://localhost:8888
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+    import: optional:configserver:http://cloud-config-server:8888
